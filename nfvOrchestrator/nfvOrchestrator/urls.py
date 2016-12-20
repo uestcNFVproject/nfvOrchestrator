@@ -15,14 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-# from orchestrator.views import WelcomeView
-# from orchestrator.views import MainView
+from orchestrator.views import WelcomeView
+from orchestrator.views import MainView
 from orchestrator.views import rspSFNameListView
-# from orchestrator.views import MyView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^$', WelcomeView.as_view(), name='welcome'),
-    # url(r'^main/$', MainView.as_view(), name='main'),
+    url(r'^$', WelcomeView.as_view(), name='welcome'),
+    url(r'^main/$', MainView.as_view(), name='main'),
     url(r'^rspget/$',rspSFNameListView.as_view(),name='rspSFNameListGet'),
-    # url(r'^mine/$', MyView.as_view(), name='my-view'),
 ]

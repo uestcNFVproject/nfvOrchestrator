@@ -6,13 +6,17 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.views.generic import View
 from orchestrator.models import rsp
+
+class WelcomeView(TemplateView):
+    template_name = "welcome.html"
+
+class MainView(TemplateView):
+    template_name = "main.html"
+
+
 #
-# class WelcomeView(TemplateView):
-#     template_name = "welcome.html"
-#
-# class MainView(TemplateView):
-#     template_name = "main.html"
-#
+
+# odl request for rsp's sf name list
 class rspSFNameListView(View):
     def get(self, request, *args, **kwargs):
         if(request.method=="GET"):
@@ -32,7 +36,6 @@ class rspSFNameListView(View):
             return HttpResponse(json.dumps("no post support"), content_type="application/json")
         return HttpResponse(json.dumps("wrong page"), content_type="application/json")
 
-# class MyView(View):
-#     def get(self, request, *args, **kwargs):
-#         return HttpResponse('Hello, World!')
+
+
 #
