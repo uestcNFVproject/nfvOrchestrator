@@ -19,19 +19,19 @@ class NSDManager:
     def get_all_nsd(self):
         return NSDManager.NSD_list
 
-    def get_nsd_by_name(self,name):
+    def find_nsd_by_name(self,name):
         for nsd in NSDManager.NSD_list:
             if nsd.name==name:
                 return nsd
         return None
 
-    def get_nsd_by_id(self,nsd_id):
+    def find_nsd_by_id(self,nsd_id):
         for nsd in NSDManager.NSD_list:
             if nsd.nsd_id==nsd_id:
                 return nsd
         return None
 
-    def add_nsd(self,NSD):
+    def upload_nsd(self,NSD):
         for nsd in NSDManager.NSD_list:
             if nsd.nsd_id==NSD.nsd_id or nsd.name==NSD.name :
                 return False

@@ -5,3 +5,6 @@
 # @Site    :
 # @File    : AlgorithmManager.py
 # @Software: PyCharm
+
+class AlgorithmManager:
+    pass

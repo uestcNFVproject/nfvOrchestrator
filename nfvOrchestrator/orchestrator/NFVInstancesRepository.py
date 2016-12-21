@@ -9,5 +9,7 @@
 
 
 # hold all vnf instances and ns instances
+class vnf_instance_manager:
+    pass
 
 

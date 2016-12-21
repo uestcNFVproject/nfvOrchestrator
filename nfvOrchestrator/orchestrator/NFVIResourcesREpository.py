@@ -8,7 +8,8 @@
 
 
 # hold all physical resources,including computing,storage,networking
-
+class nfvi_instance_manager:
+    pass
 # specially for fat tree network
 
 
