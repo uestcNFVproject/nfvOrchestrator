@@ -13,42 +13,55 @@ from orchestrator.infoObjects import vnfInfo
 # provider vnf life cycle management
 
 class VNFM:
+    vnf_list=[]
 
-
+    # create a vm to work with this vnf
     def create_vnf(self,vnfd):
         # step1:from vfnd create a vnf object
         vnf=VNF.init_from_vnfd(vnfd)
         # step2:create new vm
         vm=VIMProxy.VIMProxy.create_vm(vm_name=vnf.vm_name)
         # step3:associate vnf with vm
+        # for simplcy ,1 vnf only has 1 vm
         vnf.vm=vm
         # step4:register it to odl
         vnf_info=vnfInfo.init_from_vnf([vnf])
         VIMProxy.OpenDayLightApi.register_vnfs([vnf_info])
 
-
+    # create a vnf without creating vm
     def create_vnf(self, vnfd,vm):
         # step1:from vfnd create a vnf object
         vnf = VNF.init_from_vnfd(vnfd)
         # step2:associate vnf with vm
-
+        vnf.vm = vm
         # step3:register it to odl
         vnf_info = vnfInfo.init_from_vnf([vnf])
         VIMProxy.OpenDayLightApi.register_vnfs([vnf_info])
 
+    def delete_vnf(self,vnf):
+        vm=vnf.vm
+        VIMProxy.VIMProxy.delete_vm(vm)
 
-
-    def init_vnf_function(self):
+    # init with needed packet
+    def init_vnf_function(self,vnfd,vnf,vm):
         pass
+
 
     def get_all_vnf(self):
-        pass
+        return VNFM.vnf_list
 
     def get_vnf_by_name(self,name):
-        pass
+        for vnf in VNFM.vnf_list:
+            if name==vnf.vnf_name:
+                return vnf
+        return None
+
 
     def get_vnf_by_id(self,vnf_id):
-        pass
+        for vnf in VNFM.vnf_list:
+            if vnf_id==vnf.vnf_id:
+                return vnf
+        return None
 
     def update_vnf_state(self,vnf):
         pass
@@ -64,7 +77,7 @@ class VNF:
         self.vnfm=vnfm
         self.type=type
         self.vnfd=vnfd
-
+    # todo
     def init_from_vnfd(self,vnfd):
         pass
 

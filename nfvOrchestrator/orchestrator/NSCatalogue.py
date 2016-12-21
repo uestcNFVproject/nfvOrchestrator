@@ -14,27 +14,47 @@ class NSManager:
 # provider nsd management ,including nsd curd
 class NSDManager:
 
+    NSD_list=[]
+
     def get_all_nsd(self):
-        pass
+        return NSDManager.NSD_list
 
     def get_nsd_by_name(self,name):
-        pass
+        for nsd in NSDManager.NSD_list:
+            if nsd.name==name:
+                return nsd
+        return None
 
     def get_nsd_by_id(self,nsd_id):
-        pass
+        for nsd in NSDManager.NSD_list:
+            if nsd.nsd_id==nsd_id:
+                return nsd
+        return None
 
     def add_nsd(self,NSD):
-        pass
+        for nsd in NSDManager.NSD_list:
+            if nsd.nsd_id==NSD.nsd_id or nsd.name==NSD.name :
+                return False
+        return NSDManager.NSD_list.append(NSD)
 
     def delete_nsd_by_name(self,name):
-        pass
+        for nsd in NSDManager.NSD_list:
+            if(nsd.name==name):
+                NSDManager.NSD_list.remove(nsd)
+                return True
+        return False
 
     def delete_nsd_by_id(self,nsd_id):
-        pass
+        for nsd in NSDManager.NSD_list:
+            if(nsd.nsd_id==nsd_id):
+                NSDManager.NSD_list.remove(nsd)
+                return True
+        return False
 
     def delete_all_nsd(self):
-        pass
+        NSDManager.NSD_list.clear()
 
+    # todo
     def update_nsd(self,old_nsd,new_nsd):
         pass
 
@@ -42,7 +62,13 @@ class NSDManager:
 
 class NSD:
     def __init__(self,nsd_id,name):
-        pass
+        self.nsd_id=nsd_id
+        self.name=name
+        self.vnf_list
+        self.sfc
+        self.fg
+
+
 
 class VLD:
     pass

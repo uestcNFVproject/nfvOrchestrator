@@ -6,6 +6,9 @@
 # @File    : infoObjects.py
 # @Software: PyCharm
 
+'''
+these classes are for opendaylight operations
+'''
 class nodeInfo:
     def __init__(self,name,ip,vnf_list):
         self.name=name
