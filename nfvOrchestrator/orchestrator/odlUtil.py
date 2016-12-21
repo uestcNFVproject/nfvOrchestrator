@@ -8,7 +8,7 @@ import os
 
 USERNAME = 'admin'
 PASSWORD = 'admin'
-controller = '192.168.1.225'
+controller = '192.168.1.1'
 DEFAULT_PORT = '8181'
 
 
@@ -98,14 +98,22 @@ def get_service_nodes_uri():
 def get_service_nodes_data(node_list):
     service_nodes=[]
     for node in node_list:
+        sf_list = []
+        vnf_list=node.vnf_list
+        if vnf_list is not None:
+            for vnf in vnf_list:
+                sf_list.append(vnf.vnf_name)
         dic= {
             "name": node.name,
-            "service-function": [
-            ],
+            "service-function": sf_list,
             "ip-mgmt-address": node.ip
         }
         service_nodes.append(dic)
-    return service_nodes
+    return {
+        "service-nodes": {
+            "service-node": service_nodes
+        }
+    }
 
 
 def get_service_functions_uri():
@@ -119,7 +127,7 @@ def get_service_functions_data(vnf_list):
             "name": vnf.vnf_name,
             "ip-mgmt-address": vnf.ip_mgmt_address,
             "rest-uri": vnf.rest_uri,
-            "type": "dpi",
+            "type": vnf.type,
             "nsh-aware": "true",
             "sf-data-plane-locator": [
                 {
@@ -143,42 +151,56 @@ def get_service_function_forwarders_uri():
     return "/restconf/config/service-function-forwarder:service-function-forwarders"
 
 
-def get_service_function_forwarders_data(node_name, sff_name, data_plane_locator_ip, vnf_list, ovs_bridge_name="br-sfc",
-                                         sff_data_plane_locator_name='eth1'):
-    return {
-        "service-function-forwarders": {
-            "service-function-forwarder": [
+def get_service_function_forwarders_data(sff_list):
+    service_function_forwarders=[]
+    for sff in sff_list:
+        sf_dic = []
+        if sff.vnf_list is not None:
+            for vnf in sff.vnf_list:
+                sf_dpl_name = vnf.sf_dpl_name
+                vnf_dic = {
+                    "name": vnf.vnf_name,
+                    "sff-sf-data-plane-locator": {
+                        "sf-dpl-name": vnf.sf_dpl_name,
+                        "sff-dpl-name": sff.data_plane_locator_name
+                    }
+                }
+                sf_dic.append(vnf_dic)
+
+        dic={
+            "name": sff.name,
+            "service-node": sff.node_name,
+            "service-function-forwarder-ovs:ovs-bridge": {"bridge-name": sff.ovs_bridge_name, },
+            "sff-data-plane-locator": [
                 {
-                    "name": sff_name,
-                    "service-node": node_name,
-                    "service-function-forwarder-ovs:ovs-bridge": {"bridge-name": ovs_bridge_name, },
-                    "sff-data-plane-locator": [
-                        {
-                            "name": sff_data_plane_locator_name,
-                            "data-plane-locator": {
-                                "transport": "service-locator:vxlan-gpe",
-                                "port": 6633,
-                                "ip": data_plane_locator_ip
-                            },
-                            "service-function-forwarder-ovs:ovs-options": {
-                                "remote-ip": "flow",
-                                "dst-port": "6633",
-                                "key": "flow",
-                                "nsp": "flow",
-                                "nsi": "flow",
-                                "nshc1": "flow",
-                                "nshc2": "flow",
-                                "nshc3": "flow",
-                                "nshc4": "flow"
-                            }
-                        }
-                    ],
-                    "service-function-dictionary": convert_vnf_list_to_sf_dic(vnf_list, sff_data_plane_locator_name),
+                    "name": sff.data_plane_locator_name,
+                    "data-plane-locator": {
+                        "transport": "service-locator:vxlan-gpe",
+                        "port": 6633,
+                        "ip": sff.data_plane_locator_ip
+                    },
+                    "service-function-forwarder-ovs:ovs-options": {
+                        "remote-ip": "flow",
+                        "dst-port": "6633",
+                        "key": "flow",
+                        "nsp": "flow",
+                        "nsi": "flow",
+                        "nshc1": "flow",
+                        "nshc2": "flow",
+                        "nshc3": "flow",
+                        "nshc4": "flow"
+                    }
                 }
             ]
         }
+        if len(sf_dic)!=0:
+            dic["service-function-dictionary"]=sf_dic
+        service_function_forwarders.append(dic)
+    return {
+    "service-function-forwarders": {
+        "service-function-forwarder": service_function_forwarders
     }
-
+}
 
 def convert_vnf_list_to_sf_dic(vnf_list, sff_data_plane_locator_name):
     res = []
@@ -199,14 +221,38 @@ def convert_vnf_list_to_sf_dic(vnf_list, sff_data_plane_locator_name):
 def get_service_function_chains_uri():
     return "/restconf/config/service-function-chain:service-function-chains/"
 
+{
+                "name": "SFC2",
+                "symmetric": "true",
+                "sfc-service-function": [
+                    {
+                        "name": "dpi-abstract1",
+                        "type": "dpi"
+                    },
+                    {
+                        "name": "firewall-abstract1",
+                        "type": "firewall"
+                    }
+                ]
+            }
 
 def get_service_function_chains_data(sfc_list):
     service_function_chains = []
     for sfc in sfc_list:
+        sf_list = []
+        count_dic={}
+        for vnf in sfc.vnf_list:
+            count=count_dic.get(vnf.type,0)
+            count_dic[vnf.type]=count+1
+            sf_dic = {
+                "name": vnf.type + "-abstract"+str(count_dic[vnf.type]),
+                "type": vnf.type
+            }
+            sf_list.append(sf_dic)
         dic = {
             "name": sfc.name,
             "symmetric": sfc.isSymmetric,
-            "sfc-service-function": sfc.vnf_list
+            "sfc-service-function": sf_list
         }
         service_function_chains.append(dic)
     return {
@@ -216,15 +262,6 @@ def get_service_function_chains_data(sfc_list):
     }
 
 
-def convert_vnf_list_to_sfc_service_function(vnf_list):
-    res = []
-    for index, vnf in vnf_list:
-        dic = {
-            "name": vnf.type + "-" + index,
-            "type": vnf.type
-        }
-        res.append(dic)
-    return res
 
 
 def get_service_function_metadata_uri():
@@ -257,12 +294,12 @@ def get_service_function_paths_data(sfp_list):
         dic = {
             "name": sfp.sfp_name,
             "service-chain-name": sfp.sfc_name,
-            "classifier": sfp.in_classifier_name,
-            "symmetric-classifier": sfp.out_classifier_name,
+            "classifier": sfp.classifier_name,
+            "symmetric-classifier": sfp.symmetric_classifier_name,
             "context-metadata": "NSH1",
             "symmetric": sfp.is_symmetric
         }
-    service_function_path.append(dic)
+        service_function_path.append(dic)
     return {
         "service-function-paths": {
             "service-function-path": service_function_path
@@ -306,9 +343,27 @@ def get_service_function_acl_data(acl_list):
             }
         }
         acls.append(dic)
-    return acls
+    return {
+        "access-lists": {
+            "acl": acls
+        }
+    }
 
 
+
+def get_rendered_service_path_uri():
+    return "/restconf/operations/rendered-service-path:create-rendered-path/"
+
+
+# nonoSchedule_123456_oriPathName
+def get_rendered_service_path_data(rsp):
+    return {
+        "input": {
+            "name": rsp.name,
+            "parent-service-function-path": rsp.sfp,
+            "symmetric": rsp.isSymmetric
+        }
+    }
 
 def get_service_function_classifiers_uri():
     return "/restconf/config/service-function-classifier:service-function-classifiers/"
@@ -318,7 +373,7 @@ def get_service_function_classifiers_data(classifier_list):
     service_function_classifiers=[]
     for classifier in classifier_list:
         dic={
-            "name": classifier.classifier,
+            "name": classifier.name,
             "scl-service-function-forwarder": [
                 {
                     "name": classifier.sff_name,
@@ -335,18 +390,5 @@ def get_service_function_classifiers_data(classifier_list):
     }
 
 
-def get_rendered_service_path_uri():
-    return "/restconf/operations/rendered-service-path:create-rendered-path/"
-
-
-# nonoSchedule_123456_oriPathName
-def get_rendered_service_path_data(rsp):
-    return {
-        "input": {
-            "name": rsp.name,
-            "parent-service-function-path": rsp.sfp,
-            "symmetric": rsp.isSymmetric
-        }
-    }
 
 

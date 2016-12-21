@@ -1,4 +1,4 @@
-#!/usr/bin/python
+
 import argparse
 import requests,json
 from requests.auth import HTTPBasicAuth
@@ -9,7 +9,7 @@ import os
 
 # 6 node,2 classifier,4 sff,2 sf,1 sfc,1 sfp ,2 rsp,sdn network
 # my-odl
-controller='192.168.1.225'
+controller='192.168.1.1'
 
 node0_ip='192.168.1.204'
 node1_ip='192.168.1.208'
@@ -61,11 +61,11 @@ def put(host, port, uri, data, debug=False):
     headers = {'Content-type': 'application/yang.data+json',
                'Accept': 'application/yang.data+json'}
     if debug == True:
-        print "PUT %s" % url
-        print json.dumps(data, indent=4, sort_keys=True)
+        print("PUT %s" % url)
+        print(json.dumps(data, indent=4, sort_keys=True))
     r = requests.put(url, data=json.dumps(data), headers=headers, auth=HTTPBasicAuth(USERNAME, PASSWORD))
     if debug == True:
-        print r.text
+        print(r.text)
     r.raise_for_status()
     time.sleep(5)
 
@@ -76,11 +76,11 @@ def post(host, port, uri, data, debug=False):
     headers = {'Content-type': 'application/yang.data+json',
                'Accept': 'application/yang.data+json'}
     if debug == True:
-        print "POST %s" % url
-        print json.dumps(data, indent=4, sort_keys=True)
+        print("POST %s" % url)
+        print (json.dumps(data, indent=4, sort_keys=True))
     r = requests.post(url, data=json.dumps(data), headers=headers, auth=HTTPBasicAuth(USERNAME, PASSWORD))
     if debug == True:
-        print r.text
+        print (r.text)
     r.raise_for_status()
     time.sleep(5)
 
@@ -733,26 +733,26 @@ def get_service_function_classifiers_data():
 # }
 if __name__ == "__main__":
 
-    print "sending service nodes"
+    print ("sending service nodes")
     put(controller, DEFAULT_PORT, get_service_nodes_uri(), get_service_nodes_data(), True)
-    print "sending service functions"
+    print ("sending service functions")
     put(controller, DEFAULT_PORT, get_service_functions_uri(), get_service_functions_data(), True)
-    print "sending service function forwarders"
+    print ("sending service function forwarders")
     put(controller, DEFAULT_PORT, get_service_function_forwarders_uri(), get_service_function_forwarders_data(), True)
     # sfc0
-    print "sending service function chains"
+    print ("sending service function chains")
     put(controller, DEFAULT_PORT, get_service_function_chains_uri(), get_service_function_chains_data(), True)
-    print "sending service function metadata"
+    print ("sending service function metadata")
     put(controller, DEFAULT_PORT, get_service_function_metadata_uri(), get_service_function_metadata_data(), True)
-    print "sending service function paths"
+    print ("sending service function paths")
     put(controller, DEFAULT_PORT, get_service_function_paths_uri(), get_service_function_paths_data(), True)
-    print "sending service function acl"
+    print ("sending service function acl")
     put(controller, DEFAULT_PORT, get_service_function_acl_uri(), get_service_function_acl_data(), True)
-    print "sending rendered service path"
+    print ("sending rendered service path")
     post(controller, DEFAULT_PORT, get_rendered_service_path_uri(), get_rendered_service_path_data(), True)
-    print "sending rendered service path2"
+    print ("sending rendered service path2")
     post(controller, DEFAULT_PORT, get_rendered_service_path_uri(), get_rendered_service_path_data2(), True)
-    print "sending service function classifiers"
+    print ("sending service function classifiers")
     put(controller, DEFAULT_PORT, get_service_function_classifiers_uri(), get_service_function_classifiers_data(), True)
 
 
