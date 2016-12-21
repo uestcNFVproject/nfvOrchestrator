@@ -1,10 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 16-12-21 下午4:30
+# @Author  : mengyuGuo
+# @Site    :
+# @File    : testOpenStackOriApi.py
+# @Software: PyCharm
+
 import json
-from orchestrator.openstackOriApiUtil import *
-
-
+from orchestrator.OpenStackOriApi import *
+from django.test import TestCase
 
 def test_openstasck_ori_api():
-    nova_client = get_nova_clint()
+    nova_client = get_nova_client()
     print(get_flavors_list(nova_client))
     print(get_flavor_by_name(nova_client, 'my3g'))
 
@@ -45,3 +52,23 @@ def test_openstasck_ori_api():
                         network_name=network_name,
                         vm_name=vm_name, keypair_name=keypair_name, security_group_name=security_group_name,
                         compute_node_name=compute_node_name, user_data=user_data))
+
+
+# nova_client = get_nova_client()
+# print(get_hypervisors_list(nova_client))
+class myTest(TestCase):
+    def setUp(self):
+        pass
+    def tearDown(self):
+        pass
+
+    def test_get_hosts(self):
+        hosts=get_hosts_list(get_nova_client())
+        print(hosts[-1])
+
+    def test_get_hypervisors(self):
+        hypervisors=get_hypervisors_list(get_nova_client())
+        print(hypervisors)
+
+    def test_get_all_servers(self):
+        print(get_servers_list(get_nova_client()))

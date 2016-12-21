@@ -1,4 +1,10 @@
-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 16-12-21 下午4:30
+# @Author  : mengyuGuo
+# @Site    :
+# @File    : infoObjects.py
+# @Software: PyCharm
 
 class nodeInfo:
     def __init__(self,name,ip,vnf_list):
@@ -36,6 +42,9 @@ class vnfInfo:
         self.compute_node_name = compute_node_name
         self.sf_dpl_name=sf_dpl_name
         self.user_data=user_data
+
+    def init_from_vnf(self,vnf):
+        pass
 
 class sffInfo:
     def __init__(self,name,node_name,ovs_bridge_name,data_plane_locator_name,data_plane_locator_ip,vnf_list):

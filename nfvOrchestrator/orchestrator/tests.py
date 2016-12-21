@@ -1,5 +1,5 @@
 import json
-from orchestrator.openstackOriApiUtil import *
+from orchestrator.OpenStackOriApi import *
 # from django.test import TestCase
 from orchestrator.models import rsp
 
