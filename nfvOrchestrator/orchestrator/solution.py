@@ -9,4 +9,10 @@
 
 class solution:
     def __init__(self):
+        # 新创建的网络
+        self.net_solution
+        # 新创建的vnf
+        self.vnf_solution
+        # 新创建的sfc信息
+        self.sfc_solution
         pass

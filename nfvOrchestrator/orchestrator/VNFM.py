@@ -42,7 +42,10 @@ class VNFM:
         vm=vnf.vm
         VIMProxy.VIMProxy.delete_vm(vm)
 
-    # init with needed packet
+    def check_vnf_state(vnf):
+        pass
+
+    # init with needed software
     def init_vnf_function(self,vnfd,vnf,vm):
         pass
 
@@ -82,6 +85,8 @@ class VNF:
     def init_from_vnfd(self,vnfd):
         pass
 
+class VNFM_tacker(VNFM):
+    pass
 
 class vnf_life_state(Enum):
     created=1

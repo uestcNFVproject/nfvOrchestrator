@@ -3,14 +3,13 @@
 # @Time    : 16-12-21 下午4:30
 # @Author  : mengyuGuo
 # @Site    :
-# @File    : NFVIResourcesREpository.py
+# @File    : NFVIcatalogue.py
 # @Software: PyCharm
 
 
 # hold all physical resources,including computing,storage,networking
-class nfvi_instance_manager:
+class NFVI_manager:
     pass
-# specially for fat tree network
 
 
 class NFVI:

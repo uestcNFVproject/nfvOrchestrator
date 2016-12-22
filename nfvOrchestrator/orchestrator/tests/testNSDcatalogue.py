@@ -1,18 +1,25 @@
-import re
-pattern=re.compile(r'vnfd.*?: \s*(\w*)')
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time    : 16-12-22 下午4:52
+# @Author  : mengyuGuo
+# @Site    : 
+# @File    : testNSDcatalogue.py
+# @Software: PyCharm
 
-match=pattern.search('vnfd-id-ref: cirros_vnfd asd')
-if match:
-    print("match")
-    print(match.group(1).lstrip())
+import  json
 
-print(2)
-for m in pattern.finditer('''asdvnfd-id-ref: cirros_vnfd  weqe'''):
-    print("match")
-    print(m.group(1))
+from django.test import TestCase
 
+class myTest(TestCase):
 
-{
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_contains_new_vnfd(self):
+        content='''{
    "name":"iperf-NS",
    "vendor":"Fokus",
    "version":"0.1",
@@ -154,4 +161,6 @@ for m in pattern.finditer('''asdvnfd-id-ref: cirros_vnfd  weqe'''):
          ]
       }
    ]
-}
+}'''
+        content_json=json.loads(content)
+        print("vnfd" in content_json)

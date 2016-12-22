@@ -7,15 +7,15 @@
 # @Software: PyCharm
 
 class NFVO:
-    def __init__(self, vim, vnfm, NSD_manager, VNFD_manager, ns_instance_manager, nfvi_instance_manager,
-                 algorith_manager):
+    def __init__(self, vim, vnfm, NSD_manager, VNFD_manager, NS_manager, NFVI_manager,algorith_manager,FG_manager):
         self.vim_list = [vim]
         self.vnfm = vnfm
         self.NSD_manager = NSD_manager
         self.VNFD_manager = VNFD_manager
-        self.ns_instance_manager = ns_instance_manager
-        self.nfvi_instance_manager = nfvi_instance_manager
+        self.NS_manager = NS_manager
+        self.NFVI_manager = NFVI_manager
         self.algorith_manager = algorith_manager
+        self.FG_manager=FG_manager
 
     def register_vim(self, vim):
         self.vim_list.append(vim)
@@ -28,46 +28,49 @@ class NFVO:
 
     def deploy_ns(self, nsd_name):
 
-        # step 1:get nsd
+        # Step 1: NFVO从NSD catalogue和VNFD catalogue获取相关NSD和VNFD
         nsd = self.NSD_manager.find_nsd_by_name(nsd_name)
+        relative_vnfds=self.VNFD_manager.find_relative_vnfd(nsd)
 
-        # step2 :compute a solution (throught algorith)
+        # step2 :调用Algorithm Manager进行调度，Algorithm Manager根据NS catalogue和NFVI catalogue获取现有NS服务运行情况和底层NFVI资源情况，根据设定的算法计算出部署方案
         # simply,one vnf only contains one vnfc
         # algorith will consider the physical envirment (through nfvi_instance_manager),current ns envirment(through ns_instance_manager) to satisfied the nsd requirement
         # solution contains vnf and vm mapping relations,if one vm only support one vnfc,each vnf will create a new vm (current support)
         # if not,vm should contain not created flag
-        # todo:right now tacker will create a vm for a vnf,we should change it (need change tacker )
-        solution = self.algorith_manager.get_solution(nsd, self.nfvi_instance_manager, self.ns_instance_manager)
+        # todo:right now tacker will create a vm for a vnf,we should change it
+        solution = self.algorith_manager.get_solution(nsd,relative_vnfds, self.NFVI_manager, self.NS_manager)
 
-        # step 3:deploy new nets (throught vim)
-        # this step are  considered in the future to satisfy net isolation and bandwith requirement
-        new_created_nets = solution.new_created_nets
-        for net in new_created_nets:
+        # step 3:NFVO根据部署方案，调用VNFM创建网络和VNF，VNFM根据方案创建VNF实例：如果需要，调用VIM创建新VM来承载VNF实例，如果复用旧VM，在旧VM上部署相关VNF实例。
+        # 创建好vm后，VNFM对VM进行初始化配置和检测
+        # net are  considered in the future to satisfy net isolation and bandwith requirement
+        net_solution = solution.net_solution
+        for net in net_solution:
             self.vim_list[net.vim_zone_number].create_net(net)
 
-        # step 6:deply vnf (throught vnfm) vnfm will create real vm by the detailed solution in vnf
-        vnf_list = solution.vnf_list
-        for vnf in vnf_list:
+        vnf_solution = solution.vnf_solution
+        for vnf in vnf_solution:
             self.vnfm.create_vnf(vnf, vnf.vm)
 
-        # step 5:deploy sfc net path
+        # step 4:NFVO根据部署方案，调用FG Manager创建NS所需的网络转发链路
         sfc_solution = solution.sfc_solution
-        self.vim_list[sfc_solution.vim_zone_number].deploy_sfc(sfc_solution)
+        self.FG_manager.deploy_sfc(sfc_solution)
 
-        # step 7:check vnf state
-        for vnf in solution.vnf_list:
+        # step 5:创建好vm和ns的net后，NFVO根据部署方案，调用VNFM对VNF进行检测
+        # step 6:NFVO对NS服务进行检测
+        for vnf in solution.vnf_solution:
             state = self.vnfm.check_vnf_state(vnf)
             if state != 0:
                 print("vnf state wrong")
-                for vm in new_created_vms:
-                    self.vim_list[vm.vim_zone_number].delete_vm(vm)
-                for net in new_created_nets:
+                for vnf in vnf_solution:
+                    self.vnfm.delete_vnf(vnf)
+                for net in net_solution:
                     self.vim_list[net.vim_zone_number].delete_net(net)
                 return False
-        # step 8 :check ns state
-        pass
+
+        return True
 
     def delete_ns(self):
+
         pass
 
     def destory_ns(self):
