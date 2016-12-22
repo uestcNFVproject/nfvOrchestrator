@@ -5,7 +5,7 @@
 # @Site    :
 # @File    : VNFDcatalogue.py
 # @Software: PyCharm
-
+import json
 
 
 # provider VNFD management,inlcuding vnfd curd
@@ -38,7 +38,9 @@ class VNFD_manager:
         for vnfd in VNFD_manager.VNFD_list:
             if vnfd.name==vnfd_to_insert.name:
                 return False
-        return VNFD_manager.VNFD_list.append(vnfd)
+        self.refine_vnfd(vnfd_to_insert)
+        VNFD_manager.VNFD_list.append(vnfd)
+        return vnfd
 
     def delete_vnfd(self,vnfd_to_delete):
         for vnfd in VNFD_manager.VNFD_list:
@@ -47,7 +49,40 @@ class VNFD_manager:
                 return True
         return False
 
-#
+    def refine_vnfd(self,vnfd):
+        vnfd.vdu_list=self.search_vduin_vnfd(vnfd)
+        vnfd.vl_list=self.search_vl_vnfd(vnfd)
+        vnfd.flavor_list = self.search_flavor_list_vnfd(vnfd)
+        vnfd.cp_list = self.search_cp_list_vnfd(vnfd)
+
+    def search_vdu_in_vnfd(self, vnfd):
+        content = json.loads(vnfd.content)
+        if "vdu" in content:
+            vdu_list = content["vdu"]
+            for vdu in vdu_list:
+                vnfd.vdu_list.append(vdu)
+
+    def search_vl_in_vnfd(self, vnfd):
+        content = json.loads(vnfd.content)
+        if "vl" in content:
+            vl_list = content["vl"]
+            for vl in vl_list:
+                vnfd.vl_list.append(vl)
+
+    def search_flavor_in_vnfd(self, vnfd):
+        content = json.loads(vnfd.content)
+        if "flavor" in content:
+            flavor_list = content["flavor"]
+            for flavor in flavor_list:
+                vnfd.flavor_list.append(flavor)
+
+    def search_cp_in_vnfd(self, vnfd):
+        content = json.loads(vnfd.content)
+        if "connection-point" in content:
+            cp_list = content["connection-point"]
+            for cp in cp_list:
+                vnfd.cp_list.append(cp)
+
 class VNFD:
     def __init__(self):
         self.name

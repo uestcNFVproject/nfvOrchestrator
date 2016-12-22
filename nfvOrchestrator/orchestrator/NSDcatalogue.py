@@ -105,7 +105,7 @@ class NSD:
         self.vnfd_pattern = re.compile(r'vnfd.*?: \s*(\w*)')
 
 
-        # 从NSD提取相关信息 todo
+
 
 
 
