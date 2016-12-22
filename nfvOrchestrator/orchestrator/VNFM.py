@@ -66,7 +66,8 @@ class VNFM:
     def update_vnf_state(self,vnf):
         pass
 
-
+    def check_vnf_state(self,vnf):
+        pass
 
 
 class VNF:

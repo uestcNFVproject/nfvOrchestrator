@@ -22,7 +22,7 @@ class VNFDManager:
                 return vnfd
         return None
 
-    def insert_vnfd(self,vnfd_to_insert):
+    def upload_vnfd(self,vnfd_to_insert):
         for vnfd in VNFDManager.VNFD_list:
             if vnfd.name==vnfd_to_insert.name:
                 return False
