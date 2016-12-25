@@ -5,7 +5,7 @@
 # @Site    :
 # @File    : VNFDcatalogue.py
 # @Software: PyCharm
-import json
+import yaml
 
 
 # provider VNFD management,inlcuding vnfd curd
@@ -37,8 +37,7 @@ class VNFD_manager:
     def upload_vnfd(self,vnfd_to_insert):
         for vnfd in VNFD_manager.VNFD_list:
             if vnfd.name==vnfd_to_insert.name:
-                return False
-        self.refine_vnfd(vnfd_to_insert)
+                raise Exception("invalid vnfd ,name conflict")
         VNFD_manager.VNFD_list.append(vnfd)
         return vnfd
 
@@ -49,48 +48,42 @@ class VNFD_manager:
                 return True
         return False
 
-    def refine_vnfd(self,vnfd):
-        vnfd.vdu_list=self.search_vduin_vnfd(vnfd)
-        vnfd.vl_list=self.search_vl_vnfd(vnfd)
-        vnfd.flavor_list = self.search_flavor_list_vnfd(vnfd)
-        vnfd.cp_list = self.search_cp_list_vnfd(vnfd)
-
-    def search_vdu_in_vnfd(self, vnfd):
-        content = json.loads(vnfd.content)
-        if "vdu" in content:
-            vdu_list = content["vdu"]
-            for vdu in vdu_list:
-                vnfd.vdu_list.append(vdu)
-
-    def search_vl_in_vnfd(self, vnfd):
-        content = json.loads(vnfd.content)
-        if "vl" in content:
-            vl_list = content["vl"]
-            for vl in vl_list:
-                vnfd.vl_list.append(vl)
-
-    def search_flavor_in_vnfd(self, vnfd):
-        content = json.loads(vnfd.content)
-        if "flavor" in content:
-            flavor_list = content["flavor"]
-            for flavor in flavor_list:
-                vnfd.flavor_list.append(flavor)
-
-    def search_cp_in_vnfd(self, vnfd):
-        content = json.loads(vnfd.content)
-        if "connection-point" in content:
-            cp_list = content["connection-point"]
-            for cp in cp_list:
-                vnfd.cp_list.append(cp)
 
 class VNFD:
-    def __init__(self):
-        self.name
-        self.vnfd_id
-        self.type
-        self.cpu_request
-        self.mem_request
-        self.link_request
+    def __init__(self,yaml_content):
+        self.yaml_content = yaml_content
+        self.dic_content = yaml.load(yaml_content)
+
+        if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
+            raise Exception("invalid vnfd ,no metadata or  name infomation")
+        self.name=self.dic_content['metadata']['template_name']
+
+        if 'types' not in self.dic_content :
+            raise Exception("invalid vnfd ,no type infomation")
+        self.type=self.dic_content['node types']
 
 
-    pass
+        if 'topology_template' not in self.dic_content or 'node_templates' not in self.dic_content['topology_template']:
+            raise Exception("invalid vnfd ,no topology_template or  node_templates infomation")
+
+        self.vdu_list = []
+        for (k,v) in self.dic_content['topology_template']['node_templates'].items():
+            if k.startswith('VDU'):
+                tmp={}
+                tmp[k]=v
+                self.vdu_list.append(tmp)
+
+        self.cp_list=[]
+
+        for (k,v) in self.dic_content['topology_template']['node_templates'].items():
+            if k.startswith('CP'):
+                tmp={}
+                tmp[k]=v
+                self.vdu_list.append(tmp)
+
+        self.vl_list = []
+        for (k,v) in self.dic_content['topology_template']['node_templates'].items():
+            if k.startswith('VL'):
+                tmp={}
+                tmp[k]=v
+                self.vdu_list.append(tmp)

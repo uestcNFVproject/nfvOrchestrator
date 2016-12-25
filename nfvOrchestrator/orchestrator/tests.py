@@ -1,157 +1,25 @@
-import re
-pattern=re.compile(r'vnfd.*?: \s*(\w*)')
+# 加载yaml
+import yaml
 
-match=pattern.search('vnfd-id-ref: cirros_vnfd asd')
-if match:
-    print("match")
-    print(match.group(1).lstrip())
+# 读取文件
+f = open('./templates_examples/vnffgd_example.yaml')
 
-print(2)
-for m in pattern.finditer('''asdvnfd-id-ref: cirros_vnfd  weqe'''):
-    print("match")
-    print(m.group(1))
+# 导入
+x = yaml.load(f)
 
 
-{
-   "name":"iperf-NS",
-   "vendor":"Fokus",
-   "version":"0.1",
-   "vnfd":[
-      {
-         "vendor":"tbr",
-         "version":"0.1",
-         "name":"iperf-server",
-         "type":"server",
-         "endpoint":"generic",
-         "configurations":{
-            "name":"config_name",
-            "configurationParameters":[]
-         },
-         "vdu":[
-            {
-               "vm_image":[
-                  "ubuntu-14.04-server-cloudimg-amd64-disk1"
-               ],
-               "vimInstanceName":["vim-instance"],
-               "scale_in_out":1,
-               "vnfc":[
-                  {
-                     "connection_point":[
-                        {
-                           "virtual_link_reference":"private"
-                        }
-                     ]
-                  }
-               ]
-            }
-         ],
-         "virtual_link":[
-            {
-               "name":"private"
-            }
-         ],
-         "lifecycle_event":[
-            {
-               "event":"INSTANTIATE",
-               "lifecycle_events":[
-                  "install.sh",
-          "start-srv.sh"
-               ]
-            }
-         ],
-         "deployment_flavour":[
-            {
-               "flavour_key":"m1.small"
-            }
-         ],
-            "vnfPackageLocation":"https://github.com/openbaton/vnf-scripts.git"
+# print(x['topology_template']['node_templates'])
 
-      },
-      {
-         "vendor":"tbr",
-         "version":"0.1",
-         "name":"iperf-client",
-         "type":"client",
-         "endpoint":"generic",
-         "configurations":{
-            "name":"config_name",
-            "configurationParameters":[
+sfp_list=[]
 
-            ]
-         },
-         "vdu":[
-            {
-               "vm_image":[
-                  "ubuntu-14.04-server-cloudimg-amd64-disk1"
-               ],
-               "vimInstanceName":["vim-instance"],
-               "scale_in_out":2,
-               "vnfc":[
-                  {
-                     "connection_point":[
-                        {
-                           "floatingIp":"random",
-                           "virtual_link_reference":"private"
-                        }
-                     ]
-                  },
-                  {
-                     "connection_point":[
-                        {
-                           "floatingIp":"random",
-                           "virtual_link_reference":"private"
-                        }
-                     ]
-                  }
-               ]
-            }
-         ],
-         "virtual_link":[
-            {
-               "name":"private"
-            }
-         ],
-         "lifecycle_event":[
-            {
-               "event":"INSTANTIATE",
-               "lifecycle_events":[
-                  "install.sh"
-               ]
-            },
-            {
-               "event":"CONFIGURE",
-               "lifecycle_events":[
-                  "server_start-clt.sh"
-               ]
-            }
-         ],
-         "deployment_flavour":[
-            {
-               "flavour_key":"m1.small"
-            }
-         ],
-          "vnfPackageLocation":"https://github.com/openbaton/vnf-scripts.git"
-      }
-   ],
-   "vnffgd":[
+for (k, v) in x['topology_template']['node_templates'].items():
+   if k.startswith('Forwarding_path'):
+      tmp = {}
+      tmp[k] = v
+      sfp_list.append(tmp)
 
-   ],
-   "vld":[
-      {
-         "name":"private"
-      }
-   ],
-   "vnf_dependency":[
-      {
-         "source":{
-            "name":"iperf-server"
-         },
-         "target":{
-            "name":"iperf-client"
-         },
-         "parameters":[
-            "private"
-         ]
-      }
-   ]
-}
+for dic in sfp_list:
+   for (k,v) in dic.items():
+      print(v['properties']['path'])
+      for vnf_info in v['properties']['path']:
+         print(vnf_info['forwarder'])

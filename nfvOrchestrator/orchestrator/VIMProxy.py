@@ -57,29 +57,29 @@ class VIMProxy:
         nova_client = OpenStackOriApi.get_nova_client()
         return OpenStackOriApi.delete_net(nova_client,name)
 
+
+    def get_all_hosts(self):
+        nova_client = OpenStackOriApi.get_nova_client()
+        return OpenStackOriApi.get_hosts_list(nova_client)
+
+
+    def get_all_hypervisors_list(self):
+        nova_client = OpenStackOriApi.get_nova_client()
+        return OpenStackOriApi.get_hypervisors_list(nova_client)
+
     # todo
     def attach_vm_to_net(self):
         pass
 
 
-    # by odl api util
-    # SFC
-
-    def create_sfc(self,node_list,vnf_list,sff_list,sfc_list,sfp_list,acl_list,rsp,classifier_list):
-        OpenDayLightApi.register_nodes(node_list)
-        OpenDayLightApi.register_vnfs(vnf_list)
-        OpenDayLightApi.register_sffs(sff_list)
-        OpenDayLightApi.register_sfcs(sfc_list)
-        OpenDayLightApi.register_sf_metadata_data()
-        OpenDayLightApi.register_sfps(sfp_list)
-        OpenDayLightApi.register_acls(acl_list)
-        OpenDayLightApi.register_rsp(rsp)
-        OpenDayLightApi.register_classifiers(classifier_list)
 
 
     # physical resource info update
     def update_nfvi_info(self):
         pass
+
+
+
 
 
 

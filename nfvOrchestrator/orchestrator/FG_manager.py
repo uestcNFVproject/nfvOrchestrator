@@ -5,7 +5,7 @@
 # @Site    : 
 # @File    : FG_manager.py
 # @Software: PyCharm
-
+from  orchestrator import OpenDayLightApi
 class FG_manager:
     def __init__(self,VIMProxy):
         self.VIMProxy=VIMProxy
@@ -22,4 +22,24 @@ class FG_manager:
         rsp=sfc_solution.rsp
         classifier_list=sfc_solution.classifier_list
 
+        OpenDayLightApi.register_nodes(node_list)
+        OpenDayLightApi.register_vnfs(vnf_list)
+        OpenDayLightApi.register_sffs(sff_list)
+        OpenDayLightApi.register_sfcs(sfc_list)
+        OpenDayLightApi.register_sf_metadata_data()
+        OpenDayLightApi.register_sfps(sfp_list)
+        OpenDayLightApi.register_acls(acl_list)
+        OpenDayLightApi.register_rsp(rsp)
+        OpenDayLightApi.register_classifiers(classifier_list)
+
         return self.VIMProxy.create_sfc(node_list,vnf_list,sff_list,sfc_list,sfp_list,acl_list,rsp,classifier_list)
+
+    def deploy_vnffg(self, vnffg_solution):
+        pass
+
+
+class sfc_instances:
+    pass
+
+class vnffg_instances:
+    pass
