@@ -1,0 +1,177 @@
+tosca_definitions_version:      tosca_simple_profile_for_nfv_1_0
+tosca_default_namespace:    # Optional. default namespace (schema, types version) 
+description: example for a NSD.
+metadata:
+    ID:                                      # ID of this Network Service Descriptor
+    vendor:                              # Provider or vendor of the Network Service
+    version:                              # Version of the Network Service Descriptor 
+imports: 
+    - tosca_base_type_definition.yaml
+    # list of import statements for importing other definitions files 
+topology_template: 
+    inputs:
+            flavor ID: 
+    VNF1:
+            type: tosca.nodes.nfv.VNF.VNF1
+            properties:
+                Scaling_methodology: 
+                Flavour_ID:
+                Threshold:
+                Auto-scale policy value:
+                Constraints:
+            requirements:
+                virtualLink1: VL1    # the subsititution mappings in VNF1 has         virtualLink1: [CP11, virtualLink]
+                virtualLink2: VL2    # the subsititution mappings in VNF1 has         virtualLink2: [CP12, virtualLink]
+                virtualLink3: VL3    # the subsititution mappings in VNF1 has         virtualLink3: [CP13, virtualLink]
+            capabilities:
+               forwarder1            # the subsititution mappings in VNF1 has         forwarder1: [CP11, forwarder]
+               forwarder2            # the subsititution mappings in VNF1 has         forwarder2: [CP12, forwarder]
+               forwarder3            # the subsititution mappings in VNF1 has         forwarder3: [CP13, forwarder]
+
+     VNF2:
+            type: tosca.nodes.nfv.VNF.VNF2
+            properties:
+                Scaling_methodology: 
+                Flavour_ID:
+                Threshold:
+                Auto-scale policy value:
+                Constraints:
+            requirements:
+               virtualLink1: VL2   # the subsititution mappings in VNF2 has virtualLink1: [CP21, virtualLink]
+            capabilities:
+               forwarder1          # the subsititution mappings in VNF1 has         forwarder1: [CP21, forwarder]
+
+     VNF3:
+            type: tosca.nodes.nfv.VNF.VNF3
+            properties:
+                Scaling_methodology: 
+                Flavour_ID:
+                Threshold:
+                Auto-scale policy value:
+                Constraints:
+            requirements:
+                virtualLink1: VL2   # the subsititution mappings in VNF3 has         virtualLink1: [CP31, virtualLink]
+                virtualLink2: VL3  # the subsititution mappings in VNF3 has         virtualLink2: [CP32, virtualLink]
+                virtualLink3: VL4  # the subsititution mappings in VNF3 has         virtualLink3: [CP33, virtualLink]
+            capabilities:
+                forwarder1          # the subsititution mappings in VNF1 has         forwarder1: [CP31, forwarder]
+                forwarder2          # the subsititution mappings in VNF1 has         forwarder2: [CP32, forwarder]
+                forwarder3          # the subsititution mappings in VNF1 has         forwarder3: [CP33, forwarder]
+
+    CP01          #endpoints of NS
+            type: tosca.nodes.nfv.CP
+            properties:
+                type: 
+            requirements:
+                virtualLink: VL1
+     
+    CP02        #endpoints of NS
+            type: tosca.nodes.nfv.CP
+            properties:
+                type: 
+            requirements:
+                virtualLink: VL4
+        
+    VL1
+            type: tosca.nodes.nfv.VL.Eline
+            properties:
+# omitted here for brevity          
+            capabilities:
+                -virtual_linkable
+                  occurrences: 2
+
+    VL2
+            type: tosca.nodes.nfv.VL.ELAN
+            properties:
+                # omitted here for brevity
+            capabilities:
+                -virtual_linkable
+                  occurrences: 5           
+    VL3
+            type: tosca.nodes.nfv.VL.Eline
+            properties:
+                # omitted here for brevity
+            capabilities:
+                -virtual_linkable
+                  occurrences: 2
+    VL4
+            type: tosca.nodes.nfv.VL.Eline
+            properties:
+                # omitted here for brevity
+             capabilities:
+                -virtual_linkable
+                  occurrences: 2
+
+      Forwarding path1:
+            type: tosca.nodes.nfv.FP 
+            description: the path (CP01CP11CP13CP21CP31CP33CP02)
+            properties:
+               policy:
+            requirements:
+               -forwarder: CP01
+               -forwarder: VNF1
+                 capability: forwarder1         #CP11
+               -forwarder: VNF1
+                 capability: forwarder3         #CP13
+              -forwarder: VNF2
+            capability: forwarder1         #CP21
+               -forwarder: VNF3
+                 capability: forwarder1         #CP31
+               -forwarder: VNF3
+                 capability: forwarder3         #CP33
+               -forwarder: CP02   
+  
+      Forwarding path2:
+            type: tosca.nodes.nfv.FP 
+            description: the path (CP01CP11CP13CP31CP33CP02)
+            properties:
+               policy:
+            requirements:
+               -forwarder: CP01
+               -forwarder: VNF1
+                 capability: forwarder1         #CP11
+               -forwarder: VNF1
+                 capability: forwarder3         #CP13
+               -forwarder: VNF3 
+                 capability: forwarder1         #CP31
+               -forwarder: VNF3
+                 capability: forwarder3         #CP33
+               -forwarder: CP02     
+
+     Forwarding path3:
+            type: tosca.nodes.nfv.FP 
+            description: the path (CP01CP11CP12CP32CP33CP02)
+            properties:
+               policy:
+            requirements:
+               -forwarder: CP01
+               -forwarder: VNF1
+                 capability: forwarder1         #CP11         
+               -forwarder: VNF1
+                 capability: forwarder2         #CP12
+               -forwarder: VNF3
+                 capability: forwarder2         #CP32
+               -forwarder: VNF3
+                 capability: forwarder3         #CP33
+               -forwarder: CP02     
+
+      Groups:
+        VNFFG1:
+          type: tosca.groups.nfv.vnffg
+          description: forwarding graph 1
+          properties:
+            vendor:
+            version:
+            vl: [VL1,VL2,VL4]
+            vnf: [VNF1,VNF2,VNF3]
+          targets: [Forwarding path1, Forwarding path2]
+
+        VNFFG2:
+          type: tosca.groups.nfv.vnffg
+          description: forwarding graph 2
+          properties:
+            vendor:
+            version:
+            vl: [VL1,VL3,VL4]
+            vnf: [VNF1,VNF2]
+          targets: [Forwarding path3]
