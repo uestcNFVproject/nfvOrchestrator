@@ -18,10 +18,21 @@ from django.contrib import admin
 from orchestrator.views import WelcomeView
 from orchestrator.views import MainView
 from orchestrator.views import rspSFNameListView
+from orchestrator.views import demodeployView
+from orchestrator.views import vnfdListView
+from orchestrator.views import vnfdHandlerView
+from orchestrator.views import vnfdAddView
+from orchestrator.views import vnfdDeleteView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', WelcomeView.as_view(), name='welcome'),
     url(r'^main/$', MainView.as_view(), name='main'),
-    url(r'^rspget/$',rspSFNameListView.as_view(),name='rspSFNameListGet'),
+    url(r'^rspget/$', rspSFNameListView.as_view(), name='rspSFNameListGet'),
+    url(r'^main/demodeploy/$', demodeployView.as_view(), name='demodeployPost'),
+    url(r'^main/vnfd_list/$', vnfdListView.as_view(), name='vnfdlistGet'),
+    url(r'^main/vnfd_add/$', vnfdAddView.as_view(), name='vnfdadd'),
+    url(r'^main/vnfd_delete/$', vnfdDeleteView.as_view(), name='vnfddelete'),
+    url(r'^main/vnfd_handler/$', vnfdHandlerView.as_view(), name='vnfdhandler'),
+
 ]

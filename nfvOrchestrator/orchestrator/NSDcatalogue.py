@@ -27,6 +27,12 @@ class NSD_manager:
                 return nsd
         return None
 
+    def find_nsd_by_name(self,name):
+        for nsd in NSD_manager.NSD_list:
+            if nsd.name==name:
+                return nsd
+        return None
+
     def upload_nsd(self,NSD):
         for nsd in NSD_manager.NSD_list:
             if nsd.nsd_id==NSD.nsd_id or nsd.name==NSD.name :
@@ -134,6 +140,10 @@ class NSD:
             raise Exception("invalid nsd ,no metadata or  ID infomation")
         self.id = self.dic_content['metadata']['ID']
 
+        if 'metadata' not in self.dic_content or 'name' not in self.dic_content['metadata']:
+            raise Exception("invalid nsd ,no metadata or  name infomation")
+        self.name = self.dic_content['metadata']['name']
+
         if 'topology_template' not in self.dic_content :
             raise Exception("invalid nsd ,no topology_template ")
 
@@ -191,8 +201,6 @@ class VNFFGD:
         if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
             raise Exception("invalid vnfd ,no metadata or  name infomation")
         self.name = self.dic_content['metadata']['template_name']
-
-
 
         if 'topology_template' not in self.dic_content or 'node_templates' not in self.dic_content['topology_template']:
             raise Exception("invalid vnfd ,no topology_template or  node_templates infomation")

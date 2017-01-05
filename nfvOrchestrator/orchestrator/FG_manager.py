@@ -5,11 +5,16 @@
 # @Site    : 
 # @File    : FG_manager.py
 # @Software: PyCharm
-from  orchestrator import OpenDayLightApi
+from  nfvOrchestrator.orchestrator import OpenDayLightApi
 class FG_manager:
     def __init__(self,VIMProxy):
         self.VIMProxy=VIMProxy
-    pass
+
+    def deploy_vnffg(self,vnffg_solution):
+    #     每个vnffg包含一个或多个sfp（sfc）
+        for sfp_solution in vnffg_solution.sfp_solution_list:
+            self.deploy_sfc(sfp_solution)
+
     # do it with vim (odl)
     def deploy_sfc(self,sfc_solution):
 

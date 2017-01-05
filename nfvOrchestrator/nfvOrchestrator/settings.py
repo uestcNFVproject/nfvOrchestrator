@@ -79,14 +79,14 @@ WSGI_APPLICATION = 'nfvOrchestrator.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nfvorchestrator',
-        'USER':'root',
-        'PASSWORD':'123456',
-        'HOST':'192.168.1.225',
-        'PORT':'',
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'nfvorchestrator',
+        # 'USER':'root',
+        # 'PASSWORD':'123456',
+        # 'HOST':'192.168.1.225',
+        # 'PORT':'',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

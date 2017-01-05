@@ -2,6 +2,7 @@ tosca_definitions_version:      tosca_simple_profile_for_nfv_1_0
 tosca_default_namespace:    # Optional. default namespace (schema, types version) 
 description: example for a NSD.
 metadata:
+#    name:添加的
     ID:                                      # ID of this Network Service Descriptor
     vendor:                              # Provider or vendor of the Network Service
     version:                              # Version of the Network Service Descriptor 
