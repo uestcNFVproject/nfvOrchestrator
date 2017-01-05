@@ -34,33 +34,35 @@ class VNFD_manager:
                     res.append(vnfd)
         return res
 
-    def upload_vnfd(self,vnfd_to_insert):
+    def upload_vnfd(self,vnfd_content):
+        vnfd_to_insert=VNFD(vnfd_content)
         for vnfd in VNFD_manager.VNFD_list:
             if vnfd.name==vnfd_to_insert.name:
                 raise Exception("invalid vnfd ,name conflict")
-        VNFD_manager.VNFD_list.append(vnfd)
-        return vnfd
+        VNFD_manager.VNFD_list.append(vnfd_to_insert)
+
 
     def delete_vnfd(self,vnfd_to_delete):
         for vnfd in VNFD_manager.VNFD_list:
             if(vnfd.name==vnfd_to_delete.name):
                 VNFD_manager.VNFD_list.remove(vnfd)
                 return True
-        return False
+        raise Exception("no match  vnfd name")
 
 
 class VNFD:
     def __init__(self,yaml_content):
         self.yaml_content = yaml_content
         self.dic_content = yaml.load(yaml_content)
-
+        if not isinstance(self.dic_content,dict):
+            raise Exception("invalid yaml")
         if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
             raise Exception("invalid vnfd ,no metadata or  name infomation")
         self.name=self.dic_content['metadata']['template_name']
 
         if 'types' not in self.dic_content :
             raise Exception("invalid vnfd ,no type infomation")
-        self.type=self.dic_content['node types']
+        self.type=self.dic_content['types']
 
 
         if 'topology_template' not in self.dic_content or 'node_templates' not in self.dic_content['topology_template']:

@@ -5,7 +5,7 @@
 # @Site    : 
 # @File    : FG_manager.py
 # @Software: PyCharm
-from  nfvOrchestrator.orchestrator import OpenDayLightApi
+from  orchestrator import OpenDayLightApi
 class FG_manager:
     def __init__(self,VIMProxy):
         self.VIMProxy=VIMProxy

@@ -33,6 +33,6 @@ urlpatterns = [
     url(r'^main/vnfd_list/$', vnfdListView.as_view(), name='vnfdlistGet'),
     url(r'^main/vnfd_add/$', vnfdAddView.as_view(), name='vnfdadd'),
     url(r'^main/vnfd_delete/$', vnfdDeleteView.as_view(), name='vnfddelete'),
-    url(r'^main/vnfd_handler/$', vnfdHandlerView.as_view(), name='vnfdhandler'),
-
+    url(r'^main/vnfd_add/vnfd_handler/$', vnfdHandlerView.as_view(), name='vnfdhandler'),
+    url(r'^main/vnfd_delete/vnfd_handler/$', vnfdHandlerView.as_view(), name='vnfdhandler'),
 ]

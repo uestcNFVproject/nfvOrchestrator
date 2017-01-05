@@ -44,7 +44,7 @@ class VNFM_simple(VNFM):
     vnf_list=[]
     vm_dic={}
     def __init__(self):
-        self.nsd_catalogue=NSDcatalogue()
+        self.nsd_catalogue=NSDcatalogue.NSD_manager()
 
     def create_vnf(self,vnfd_solution):
         # step1:from vnfd_solution create a vnf object

@@ -5,6 +5,11 @@
     <title>vnfd_delete</title>
 </head>
 <body>
-
+<body>
+<form action="vnfd_handler/" method="post">
+    {% csrf_token %}
+    vnfd name: <input type="text" name="vnfdname" />
+    <input type="submit"/>
+</form>
 </body>
 </html>

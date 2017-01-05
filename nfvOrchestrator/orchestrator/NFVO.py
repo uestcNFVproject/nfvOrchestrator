@@ -37,6 +37,12 @@ class NFVO:
     def find_vnfd_by_name(self, name):
         return self.VNFD_manager.get_vnfd_by_name(name)
 
+    def find_all_vnfd(self):
+        return self.VNFD_manager.get_all_vnfd()
+
+    def delete_vnfd_by_name(self,vnfd_name):
+        return self.VNFD_manager.delete_vnfd(self.find_vnffgd_by_name(vnfd_name))
+
     def upload_vnffgd(self, vnffgd):
         return self.NSD_manager.upload_vnffdg(vnffgd)
 
@@ -187,9 +193,7 @@ class NFVO:
 
         return True
 
-    def delete_ns(self):
 
-        pass
 
     def destory_ns(self):
         pass
