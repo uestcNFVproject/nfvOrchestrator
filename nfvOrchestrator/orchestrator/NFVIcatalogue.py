@@ -8,6 +8,7 @@
 
 
 # hold all physical resources,including computing,storage,networking
+# and vm level
 class NFVI_manager:
     def __init__(self):
         self.cpu_intotal=0
@@ -27,7 +28,20 @@ class NFVI_manager:
         self.edge_layer_switch_list = []
 
     def get_all_compute_node(self):
-        return self.compute_node_list;
+        return self.compute_node_list
+
+    def get_all_vm(self):
+        pass
+
+    def get_all_switch_node(self):
+        res=[]
+        for node in self.core_layer_switch_list:
+            res.append(node)
+        for node in self.agg_layer_switch_list:
+            res.append(node)
+        for node in self.edge_layer_switch_list:
+            res.append(node)
+        return res
 
 class compute_node:
     def __init__(self,zone,name,type,state,cpu_intotal,mem_intotal,disk_intotal,bandwith,switch):

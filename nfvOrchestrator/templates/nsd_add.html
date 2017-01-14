@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>vnfd_delete</title>
+    <title>nsd_add</title>
 </head>
 <body>
-<form action="vnfd_handler/" method="post">
+<form action="nsd_handler/" method="post">
     {% csrf_token %}
-    vnfd name: <input type="text" name="vnfdname" />
+    <textarea cols="50" rows="30" id="contactus" name="nsd"></textarea><br>
     <input type="submit"/>
 </form>
 </body>

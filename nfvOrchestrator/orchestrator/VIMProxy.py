@@ -42,6 +42,9 @@ class VIMProxy:
                             compute_node_name=compute_node_name, user_data=user_data)
         return server
 
+    def get_all_server(self):
+        nova_client = OpenStackOriApi.get_nova_client()
+        return OpenStackOriApi.get_servers_list(nova_client)
 
     def delete_vm(self,name):
         nova_client = OpenStackOriApi.get_nova_client()

@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>vnfd_delete</title>
+    <title>nsd_delete</title>
 </head>
 <body>
-<form action="vnfd_handler/" method="post">
+<body>
+<form action="nsd_handler/" method="post">
     {% csrf_token %}
-    vnfd name: <input type="text" name="vnfdname" />
+    nsd name: <input type="text" name="nsdname" />
     <input type="submit"/>
 </form>
 </body>

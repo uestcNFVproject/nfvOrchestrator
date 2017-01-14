@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vnf_destory</title>
+</head>
+<body>
+<form action="vnffg_handler/" method="post">
+    {% csrf_token %}
+    vnffg instacne name: <textarea cols="50" rows="30" id="contactus" name="vnffg_instance_name"></textarea><br>
+    <input type="submit"/>
+</form>
+</body>
+</html>

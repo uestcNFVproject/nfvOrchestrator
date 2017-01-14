@@ -22,43 +22,52 @@ DEFAULT_PORT = '8181'
 
 
 def register_nodes(node_list):
-    put(controller, DEFAULT_PORT, get_service_nodes_uri(), get_service_nodes_data(node_list=node_list), True)
+    if node_list is not None:
+        put(controller, DEFAULT_PORT, get_service_nodes_uri(), get_service_nodes_data(node_list=node_list), True)
 
 def register_vnfs(vnf_list):
-    put(controller, DEFAULT_PORT, get_service_functions_uri(),
+    if vnf_list is not None:
+        put(controller, DEFAULT_PORT, get_service_functions_uri(),
         get_service_functions_data(vnf_list=vnf_list), True)
 
 
 def register_sffs(sff_list):
-    put(controller, DEFAULT_PORT, get_service_function_forwarders_uri(),
+    if sff_list is not None:
+        put(controller, DEFAULT_PORT, get_service_function_forwarders_uri(),
         get_service_function_forwarders_data(sff_list=sff_list), True)
 
 
 def register_sfcs(sfc_list):
-    put(controller, DEFAULT_PORT, get_service_function_chains_uri(),
+    if sfc_list is not None:
+        put(controller, DEFAULT_PORT, get_service_function_chains_uri(),
         get_service_function_chains_data(sfc_list=sfc_list), True)
 
 
 def register_sf_metadata_data():
+
     put(controller, DEFAULT_PORT, get_service_function_metadata_uri(), get_service_function_metadata_data(), True)
 
 
 def register_sfps(sfp_list):
-    put(controller, DEFAULT_PORT, get_service_function_paths_uri(), get_service_function_paths_data(sfp_list=sfp_list),
+    if sfp_list is not None:
+        put(controller, DEFAULT_PORT, get_service_function_paths_uri(), get_service_function_paths_data(sfp_list=sfp_list),
         True)
 
 
 def register_acls(acl_list):
-    put(controller, DEFAULT_PORT, get_service_function_acl_uri(), get_service_function_acl_data(acl_list=acl_list),
+    if acl_list is not None:
+        put(controller, DEFAULT_PORT, get_service_function_acl_uri(), get_service_function_acl_data(acl_list=acl_list),
         True)
 
 
 def register_rsp(rsp):
-    post(controller, DEFAULT_PORT, get_rendered_service_path_uri(), get_rendered_service_path_data(rsp=rsp), True)
+    if rsp is not None:
+        post(controller, DEFAULT_PORT, get_rendered_service_path_uri(), get_rendered_service_path_data(rsp=rsp), True)
 
 
 def register_classifiers(classifier_list):
-    put(controller, DEFAULT_PORT, get_service_function_classifiers_uri(),
+    if classifier_list is not None:
+        put(controller, DEFAULT_PORT, get_service_function_classifiers_uri(),
         get_service_function_classifiers_data(classifier_list=classifier_list), True)
 
 

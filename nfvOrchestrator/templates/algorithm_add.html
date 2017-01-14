@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>algorithm_add</title>
+</head>
+<body>
+<form action="algorithm_handler/" method="post">
+    {% csrf_token %}
+    algorithm name: <input type="text" name="algorithm_name" /><br>
+    algorithm content:<br>
+    <textarea cols="50" rows="30" id="contactus" name="algorithm_content"></textarea><br>
+    <input type="submit"/>
+</form>
+</body>
+</html>

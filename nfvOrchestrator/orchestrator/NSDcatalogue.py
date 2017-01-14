@@ -33,12 +33,13 @@ class NSD_manager:
                 return nsd
         return None
 
-    def upload_nsd(self,NSD):
+    def upload_nsd(self,nsd_content):
+        Nsd=NSD(nsd_content)
         for nsd in NSD_manager.NSD_list:
-            if nsd.nsd_id==NSD.nsd_id or nsd.name==NSD.name :
+            if nsd.nsd_id==Nsd.nsd_id or nsd.name==Nsd.name :
                 return False
         # self.refine_nsd(NSD)
-        return NSD_manager.NSD_list.append(NSD)
+        return NSD_manager.NSD_list.append(Nsd)
 
     def delete_nsd_by_name(self,name):
         for nsd in NSD_manager.NSD_list:
@@ -113,7 +114,8 @@ class NSD_manager:
                 return vnffgd
         return None
 
-    def upload_vnffdg(self,vnffgd):
+    def upload_vnffdg(self,vnffgd_content):
+        vnffgd=VNFFGD(vnffgd_content)
         for tmp in NSD_manager.vnffdg_list:
             if tmp.name==vnffgd.name :
                 raise Exception("invalid vnffgd ,name conflict")
@@ -178,12 +180,12 @@ class NSD:
         if 'topology_template' not in self.dic_content or 'Groups' not in self.dic_content['topology_template']:
             raise Exception("invalid nsd ,no topology_template  or Groups ")
 
-        self.fp_list = []
+        self.vnffg_list = []
         for (k, v) in self.dic_content['topology_template']['Groups'].items():
             if k.startswith('VNFFG'):
                 tmp = {}
                 tmp[k] = v
-                self.fp_list.append(tmp)
+                self.vnffg_list.append(tmp)
 
 
 
@@ -206,13 +208,21 @@ class VNFFGD:
             raise Exception("invalid vnfd ,no topology_template or  node_templates infomation")
 
         self.fp_list = []
+        self.fp_vnfd_dic={}
         for (k, v) in self.dic_content['topology_template']['node_templates'].items():
             if k.startswith('Forwarding_path'):
                 tmp = {}
                 tmp[k] = v
                 self.fp_list.append(tmp)
+                vnfd_list=[]
+                forward_list=v["properties"]["path"]
+                for forward in forward_list:
+                    vnfd_name=forward["forwarder"]
+                    vnfd_list.append(vnfd_name)
+                self.fp_vnfd_dic[tmp]=vnfd_list
 
         self.vnffg_list = []
+
 
         if 'topology_template' not in self.dic_content or 'groups' not in self.dic_content['topology_template']:
             raise Exception("invalid vnfd ,no topology_template or  groups infomation")
@@ -221,4 +231,5 @@ class VNFFGD:
             if k.startswith('VNFFG'):
                 tmp = {}
                 tmp[k] = v
-                self.vdu_list.append(tmp)
+                self.vnffg_list.append(tmp)
+

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vnf_deploy</title>
+</head>
+<body>
+<form action="vnf_handler/" method="post">
+    {% csrf_token %}
+    vnfd name: <textarea cols="50" rows="30" id="contactus" name="vnfd_name"></textarea><br>
+    vnf instacne name: <textarea cols="50" rows="30" id="contactus" name="vnf_instance_name"></textarea><br>
+    <input type="submit"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vnffgd_add</title>
+</head>
+<body>
+<form action="vnffgd_handler/" method="post">
+    {% csrf_token %}
+    <textarea cols="50" rows="30" id="contactus" name="vnffgd"></textarea><br>
+    <input type="submit"/>
+</form>
+</body>
+</html>
