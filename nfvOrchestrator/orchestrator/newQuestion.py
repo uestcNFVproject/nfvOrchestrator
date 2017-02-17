@@ -213,7 +213,7 @@ half_random_sfw_low = 1
 half_random_sfw_hight = 2
 
 
-def creat_sfc_set_half_random():
+def creat_sfc_set_half_random2():
     # sf_sets 1=>6
     # 10 sfc
     sfc_sets = [[]]
@@ -287,6 +287,79 @@ def creat_sfc_set_half_random():
         sfc_sets.append(sfc)
     return sfc_sets
 
+def creat_sfc_set_half_random():
+    # sf_sets 1=>6
+    # 10 sfc
+    sfc_sets = [[]]
+    sfc1_sf_list = [1, 3, 5]
+    sfc1_sfw_list = []
+    for index in range(len(sfc1_sf_list)):
+        sfc1_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc2_sf_list = [1, 2, 6]
+    sfc2_sfw_list = []
+    for index in range(len(sfc2_sf_list)):
+        sfc2_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc3_sf_list = [6, 2]
+    sfc3_sfw_list = []
+    for index in range(len(sfc3_sf_list)):
+        sfc3_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc4_sf_list = [1, 4]
+    sfc4_sfw_list = []
+    for index in range(len(sfc4_sf_list)):
+        sfc4_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc5_sf_list = [1, 2, 4, 5]
+    sfc5_sfw_list = []
+    for index in range(len(sfc5_sf_list)):
+        sfc5_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc6_sf_list = [6, 2, 1, 5]
+    sfc6_sfw_list = []
+    for index in range(len(sfc6_sf_list)):
+        sfc6_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc7_sf_list = [2, 4, 6, 3]
+    sfc7_sfw_list = []
+    for index in range(len(sfc7_sf_list)):
+        sfc7_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc8_sf_list = [5, 3]
+    sfc8_sfw_list = []
+    for index in range(len(sfc8_sf_list)):
+        sfc8_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc9_sf_list = [5, 2]
+    sfc9_sfw_list = []
+    for index in range(len(sfc9_sf_list)):
+        sfc9_sfw_list.append(random.randint(half_random_sfw_low, half_random_sfw_hight))
+
+    sfc_sf_list = [sfc1_sf_list, sfc2_sf_list, sfc3_sf_list, sfc4_sf_list, sfc5_sf_list, sfc6_sf_list, sfc7_sf_list,
+                   sfc8_sf_list, sfc9_sf_list]
+    sfc_sfw_list = [sfc1_sfw_list, sfc2_sfw_list, sfc3_sfw_list, sfc4_sfw_list, sfc5_sfw_list, sfc6_sfw_list,
+                    sfc7_sfw_list
+        , sfc8_sfw_list, sfc9_sfw_list]
+
+    for i in range(len(sfc_sf_list)):
+        sfc = []
+        # 0=>sf list
+        sfc.append(sfc_sf_list[i])
+        # 1=>sf weight list
+        sfc.append(sfc_sfw_list[i])
+        # 2=>sf time dic
+        sf_time_count_dic = {}
+        for sf in sfc_sf_list[i]:
+            if sf not in sf_time_count_dic:
+                sf_time_count_dic[sf] = 1
+            else:
+                sf_time_count_dic[sf] += 1
+        sfc.append(sf_time_count_dic)
+        # 3=>sfc index
+        sfc.append(i + 1)
+        sfc_sets.append(sfc)
+    return sfc_sets
 
 sfi_num_lowest = 2
 sfi_num_highest = 4
@@ -568,6 +641,65 @@ def create_sfi_set_half_radom():
         sfi_sets.append(sfi)
     return sfi_sets
 
+def create_sfi_set_half_radom2():
+    sfi_sets = [[]]
+    sfi_type_list = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 5, 5, 5, 6, 6, 6]
+    sfi_capacity_list = []
+    for index in range(len(sfi_type_list)):
+        sfi_capacity_list.append(random.randint(half_random_sfi_capacity_low, half_random_sfi_capacity_high))
+
+    sfi1_1_sfc_set = [1, 2, 6]
+    sfi1_2_sfc_set = [1]
+    sfi1_3_sfc_set = [1, 4, 5, 6]
+    sfi1_4_sfc_set = [1, 2, 4, 5]
+
+    sfi2_1_sfc_set = [2, 5, 6]
+    sfi2_2_sfc_set = [3, 6]
+    sfi2_3_sfc_set = [6, 9]
+    sfi2_4_sfc_set = [3, 7, 5]
+
+    sfi3_1_sfc_set = [1, 7, 8]
+    sfi3_2_sfc_set = [1]
+
+    sfi4_1_sfc_set = [4, 5]
+    sfi4_2_sfc_set = [5, 7]
+
+    sfi5_1_sfc_set = [1]
+    sfi5_2_sfc_set = [1, 5, 6, 8, 9]
+    sfi5_3_sfc_set = [1, 5, 6, 8]
+
+    sfi6_1_sfc_set = [2, 3, 6]
+    sfi6_2_sfc_set = [3, 7]
+    sfi6_3_sfc_set = [6, 7]
+    sfi_sfc_set_list = [sfi1_1_sfc_set, sfi1_2_sfc_set, sfi1_3_sfc_set, sfi1_4_sfc_set,
+                        sfi2_1_sfc_set, sfi2_2_sfc_set, sfi2_3_sfc_set, sfi2_4_sfc_set,
+                        sfi3_1_sfc_set, sfi3_2_sfc_set,
+                        sfi4_1_sfc_set, sfi4_2_sfc_set,
+                        sfi5_1_sfc_set, sfi5_2_sfc_set, sfi5_3_sfc_set,
+                        sfi6_1_sfc_set, sfi6_2_sfc_set, sfi6_3_sfc_set
+                        ]
+
+    for i in range(len(sfi_sfc_set_list)):
+        # add a sfi to sfi_sets
+        sfi = []
+        # 0=> type
+        sfi_type = sfi_type_list[i]
+        sfi.append(sfi_type)
+        # 1=>capacity
+        sfi_capacity = sfi_capacity_list[i]
+        sfi.append(sfi_capacity)
+        # 2=>load
+        sfi_load = 0
+        sfi.append(sfi_load)
+        # 3=>sfc set
+        sfi_sfc_sets = sfi_sfc_set_list[i]
+        sfi.append(sfi_sfc_sets)
+        # 4=>index
+        sfi.append(i + 1)
+        # 5=>be array
+        sfi.append([])
+        sfi_sets.append(sfi)
+    return sfi_sets
 
 def count_be(sfc_sets, sfi_sets):
     BE = []

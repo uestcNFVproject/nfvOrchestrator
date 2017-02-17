@@ -27,6 +27,11 @@ class NFVI_manager:
         self.agg_layer_switch_list = []
         self.edge_layer_switch_list = []
 
+        # 从OpenStack获取计算节点信息，todo
+        # 目前硬件平台固定，采用人工配置，todo
+
+        pass
+
     def get_all_compute_node(self):
         return self.compute_node_list
 

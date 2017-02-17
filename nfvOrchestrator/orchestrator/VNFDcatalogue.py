@@ -12,6 +12,7 @@ import yaml
 class VNFD_manager:
 
     def __init__(self):
+        # 从数据库读取
         pass
 
     VNFD_list=[]
@@ -49,10 +50,65 @@ class VNFD_manager:
                 return True
         raise Exception("no match  vnfd name")
 
+# 先从数据库获取最大的vnfd的assigned_id
+next_vnfd_id=0
+def get_next_id():
+    global next_vnfd_id
+    next_vnfd_id+=1
+    return next_vnfd_id
 
 class VNFD:
-    def __init__(self,yaml_content):
+    # 通过接口上传VNFD，分配vnfd_id，并解析
+    def __init__(self, yaml_content):
+        # 存入数据库的信息
         self.yaml_content = yaml_content
+        # 分配id
+        self.vnfd_id = get_next_id()
+        # 根据yaml提取
+        self.dic_content = yaml.load(yaml_content)
+        if not isinstance(self.dic_content, dict):
+            raise Exception("invalid yaml")
+        if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
+            raise Exception("invalid vnfd ,no metadata or  name infomation")
+        self.name = self.dic_content['metadata']['template_name']
+
+        if 'types' not in self.dic_content:
+            raise Exception("invalid vnfd ,no type infomation")
+        self.type = self.dic_content['types']
+
+        if 'topology_template' not in self.dic_content or 'node_templates' not in self.dic_content['topology_template']:
+            raise Exception("invalid vnfd ,no topology_template or  node_templates infomation")
+
+        self.vdu_list = []
+        for (k, v) in self.dic_content['topology_template']['node_templates'].items():
+            if k.startswith('VDU'):
+                tmp = {}
+                tmp[k] = v
+                self.vdu_list.append(tmp)
+
+        self.cp_list = []
+
+        for (k, v) in self.dic_content['topology_template']['node_templates'].items():
+            if k.startswith('CP'):
+                tmp = {}
+                tmp[k] = v
+                self.vdu_list.append(tmp)
+
+        self.vl_list = []
+        for (k, v) in self.dic_content['topology_template']['node_templates'].items():
+            if k.startswith('VL'):
+                tmp = {}
+                tmp[k] = v
+                self.vdu_list.append(tmp)
+        # 如果解决方案中得出该VNFD的部署需要新的VNF载体，那么不设置此位，否则设置为复用的载体id
+        self.vnf_carrier = None
+
+    # 从数据库读取，重建VNFD对象
+    def __init__(self,yaml_content,id):
+        # 存入数据库的信息
+        self.yaml_content = yaml_content
+        self.vnfd_id = id
+        # 根据yaml
         self.dic_content = yaml.load(yaml_content)
         if not isinstance(self.dic_content,dict):
             raise Exception("invalid yaml")
@@ -89,3 +145,6 @@ class VNFD:
                 tmp={}
                 tmp[k]=v
                 self.vdu_list.append(tmp)
+        # 如果解决方案中得出该VNFD的部署需要新的VNF载体，那么不设置此位，否则设置为复用的载体id
+        self.vnf_carrier=None
+        pass

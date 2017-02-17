@@ -103,3 +103,9 @@ class rsp(models.Model):
     rspRequestId=models.BigIntegerField()
     sfNameList=models.CharField(max_length=2000,blank=True)
 
+
+class Descriptor(models.Model):
+    type=models.IntegerField()
+    yaml_content=models.CharField(max_length=2000,blank=True)
+    assigned_id=models.IntegerField()
+

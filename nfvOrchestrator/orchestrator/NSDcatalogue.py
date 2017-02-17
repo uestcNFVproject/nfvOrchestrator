@@ -14,7 +14,9 @@ from orchestrator import VNFDcatalogue
 # provider nsd management ,including nsd curd
 class NSD_manager:
     def __init__(self):
+        # 从数据库中读取已有NSD和VNFFGD
         self.vnfd_manager=VNFDcatalogue.VNFD_manager()
+
 
     NSD_list=[]
 
@@ -132,10 +134,18 @@ class NSD_manager:
         NSD_manager.NSD_list.clear()
 
 
+# 先从数据库获取最大的nsd的assigned_id
+next_nsd_id=0
+def get_next_nsd_id():
+    global next_nsd_id
+    next_nsd_id+=1
+    return next_nsd_id
 
 class NSD:
+    # 通过网页接口上传VNFFGD文件内容，分配id并进行解析
     def __init__(self,content):
         self.yaml_content=content
+        self.id=get_next_nsd_id()
         self.dic_content = yaml.load(self.yaml_content)
 
         if 'metadata' not in self.dic_content or 'ID' not in self.dic_content['metadata']:
@@ -189,15 +199,79 @@ class NSD:
 
 
 
+    # 通过数据库上传已经加载的NSD文件内容，进行解析重铸
+    def __init__(self,content,id):
+        self.yaml_content=content
+        self.id=id
+        self.dic_content = yaml.load(self.yaml_content)
+
+        if 'metadata' not in self.dic_content or 'ID' not in self.dic_content['metadata']:
+            raise Exception("invalid nsd ,no metadata or  ID infomation")
+        self.id = self.dic_content['metadata']['ID']
+
+        if 'metadata' not in self.dic_content or 'name' not in self.dic_content['metadata']:
+            raise Exception("invalid nsd ,no metadata or  name infomation")
+        self.name = self.dic_content['metadata']['name']
+
+        if 'topology_template' not in self.dic_content :
+            raise Exception("invalid nsd ,no topology_template ")
+
+        self.vnf_list = []
+        for (k, v) in self.dic_content['topology_template'].items():
+            if k.startswith('VNF'):
+                tmp = {}
+                tmp[k] = v
+                self.vnf_list.append(tmp)
+
+        self.cp_list = []
+        for (k, v) in self.dic_content['topology_template'].items():
+            if k.startswith('CP'):
+                tmp = {}
+                tmp[k] = v
+                self.cp_list.append(tmp)
+
+        self.vl_list = []
+        for (k, v) in self.dic_content['topology_template'].items():
+            if k.startswith('VL'):
+                tmp = {}
+                tmp[k] = v
+                self.vl_list.append(tmp)
+
+        self.fp_list = []
+        for (k, v) in self.dic_content['topology_template'].items():
+            if k.startswith('Forwarding path'):
+                tmp = {}
+                tmp[k] = v
+                self.fp_list.append(tmp)
+
+        if 'topology_template' not in self.dic_content or 'Groups' not in self.dic_content['topology_template']:
+            raise Exception("invalid nsd ,no topology_template  or Groups ")
+
+        self.vnffg_list = []
+        for (k, v) in self.dic_content['topology_template']['Groups'].items():
+            if k.startswith('VNFFG'):
+                tmp = {}
+                tmp[k] = v
+                self.vnffg_list.append(tmp)
+
 class VLD:
     def __init__(self,name,content):
         self.name=name
         self.content=content
 
+# 先从数据库获取最大的vnffgd的assigned_id
+next_vnffgd_id=0
+
+def get_next_vnffgd_id():
+    global next_vnffgd_id
+    next_vnffgd_id+=1
+    return next_vnffgd_id
 
 class VNFFGD:
+    # 通过网络接口上传VNFFGD，分配id，并进行解析
     def __init__(self, yaml_content):
         self.yaml_content = yaml_content
+        self.id=get_next_vnffgd_id()
         self.dic_content = yaml.load(yaml_content)
 
         if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
@@ -233,3 +307,41 @@ class VNFFGD:
                 tmp[k] = v
                 self.vnffg_list.append(tmp)
 
+    # 通过数据库上传VNFFGD，并进行解析
+    def __init__(self, yaml_content,id):
+        self.yaml_content = yaml_content
+        self.id=id
+        self.dic_content = yaml.load(yaml_content)
+
+        if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
+            raise Exception("invalid vnfd ,no metadata or  name infomation")
+        self.name = self.dic_content['metadata']['template_name']
+
+        if 'topology_template' not in self.dic_content or 'node_templates' not in self.dic_content['topology_template']:
+            raise Exception("invalid vnfd ,no topology_template or  node_templates infomation")
+
+        self.fp_list = []
+        self.fp_vnfd_dic={}
+        for (k, v) in self.dic_content['topology_template']['node_templates'].items():
+            if k.startswith('Forwarding_path'):
+                tmp = {}
+                tmp[k] = v
+                self.fp_list.append(tmp)
+                vnfd_list=[]
+                forward_list=v["properties"]["path"]
+                for forward in forward_list:
+                    vnfd_name=forward["forwarder"]
+                    vnfd_list.append(vnfd_name)
+                self.fp_vnfd_dic[tmp]=vnfd_list
+
+        self.vnffg_list = []
+
+
+        if 'topology_template' not in self.dic_content or 'groups' not in self.dic_content['topology_template']:
+            raise Exception("invalid vnfd ,no topology_template or  groups infomation")
+
+        for (k, v) in self.dic_content['topology_template']['groups'].items():
+            if k.startswith('VNFFG'):
+                tmp = {}
+                tmp[k] = v
+                self.vnffg_list.append(tmp)
