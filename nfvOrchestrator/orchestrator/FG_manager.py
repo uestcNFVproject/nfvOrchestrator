@@ -18,8 +18,11 @@ class FG_manager:
     def get_sff_name(self,sf_ip):
         return FG_manager.ip_sffName_dic[sf_ip]
 
-    def __init__(self,VIMProxy):
-        self.VIMProxy=VIMProxy
+    def __init__(self):
+        pass
+
+    def set_nfvo(self,nfvo):
+        self.nfvo=nfvo
 
     # do it with vim (odl)
     def deploy_sfc(self,sfc_solution):
@@ -46,7 +49,7 @@ class FG_manager:
         sfc_instance=Sfc_instance(node_list,vnf_list,sff_list,sfc_list,sfp_list,acl_list,rsp,classifier_list)
 
 
-        return self.VIMProxy.create_sfc(node_list,vnf_list,sff_list,sfc_list,sfp_list,acl_list,rsp,classifier_list)
+        return self.nfvo.create_sfc(node_list,vnf_list,sff_list,sfc_list,sfp_list,acl_list,rsp,classifier_list)
 
 
 

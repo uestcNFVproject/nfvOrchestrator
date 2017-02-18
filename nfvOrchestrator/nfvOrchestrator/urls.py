@@ -59,9 +59,10 @@ from orchestrator.views import algorithmHandlerView
 
 from orchestrator.views import computeNodeListView
 from orchestrator.views import switchNodeListView
-
-
+from orchestrator.views import TestView
+from orchestrator.views import moniter
 urlpatterns = [
+    url(r'^test/$', TestView.as_view(), name='test'),
     url(r'^admin/', admin.site.urls),
     url(r'^$', WelcomeView.as_view(), name='welcome'),
     url(r'^main/$', MainView.as_view(), name='main'),
@@ -71,10 +72,9 @@ urlpatterns = [
     url(r'^main/demodeploy/$', demodeployView.as_view(), name='demodeployPost'),
     # vnfd curd
     url(r'^main/vnfd_list/$', vnfdListView.as_view(), name='vnfdlistGet'),
-    url(r'^main/vnfd_add/$', vnfdAddView.as_view(), name='vnfdadd'),
-    url(r'^main/vnfd_delete/$', vnfdDeleteView.as_view(), name='vnfddelete'),
-    url(r'^main/vnfd_add/vnfd_handler/$', vnfdHandlerView.as_view(), name='vnfdhandler'),
-    url(r'^main/vnfd_delete/vnfd_handler/$', vnfdHandlerView.as_view(), name='vnfdhandler'),
+    url(r'^main/vnfd_add$', vnfdAddView.as_view(), name='vnfdadd'),
+    url(r'^main/vnfd_delete$', vnfdDeleteView.as_view(), name='vnfddelete'),
+    url(r'^main/vnfd_handler/$', vnfdHandlerView.as_view(), name='vnfdhandler'),
     # vnffgd curd
     url(r'^main/vnffgd_list/$', vnffgdListView.as_view(), name='vnffgdlistGet'),
     url(r'^main/vnffgd_add/$', vnffgdAddView.as_view(), name='vnffgdadd'),
@@ -114,4 +114,6 @@ urlpatterns = [
     # nfvi
     url(r'^main/compute_node_list/$', computeNodeListView.as_view(), name='nsdlistGet'),
     url(r'^main/switch_node_list/$', switchNodeListView.as_view(), name='nsdlistGet'),
+    # vim
+    url(r'^node_info/details/$', moniter.as_view(), name='nodeinfo'),
 ]

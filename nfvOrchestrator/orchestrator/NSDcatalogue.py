@@ -14,8 +14,11 @@ from orchestrator import VNFDcatalogue
 # provider nsd management ,including nsd curd
 class NSD_manager:
     def __init__(self):
+        pass
         # 从数据库中读取已有NSD和VNFFGD
-        self.vnfd_manager=VNFDcatalogue.VNFD_manager()
+
+    def set_vnfd_catalogue(self,vnfd_manager):
+        self.vnfd_manager = vnfd_manager
 
 
     NSD_list=[]

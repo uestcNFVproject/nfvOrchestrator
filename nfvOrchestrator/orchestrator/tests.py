@@ -23,3 +23,4 @@ for dic in sfp_list:
       print(v['properties']['path'])
       for vnf_info in v['properties']['path']:
          print(vnf_info['forwarder'])
+

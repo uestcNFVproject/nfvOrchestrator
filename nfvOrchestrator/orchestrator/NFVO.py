@@ -13,7 +13,7 @@ nfvo_instance=None
 def init_NFVO(vim, vnfm, NSD_manager, VNFD_manager, NS_manager, NFVI_manager,algorith_manager,FG_manager):
     global nfvo_instance
     if nfvo_instance is None:
-        nfvo_instance=NFVO(vim, vnfm, NSD_manager, VNFD_manager, NS_manager, NFVI_manager,algorith_manager,FG_manager)
+        nfvo_instance=NFVO(vim, vnfm, NSD_manager, VNFD_manager, NS_manager, NFVI_manager,algorith_manager,FG_manager,vim)
     return nfvo_instance
 
 def get_NFVO():
@@ -46,7 +46,7 @@ class NFVO:
         return self.VNFD_manager.get_all_vnfd()
 
     def delete_vnfd_by_name(self,vnfd_name):
-        return self.VNFD_manager.delete_vnfd(self.find_vnffgd_by_name(vnfd_name))
+        return self.VNFD_manager.delete_vnfd(self.find_vnfd_by_name(vnfd_name))
 
     def upload_vnffgd(self, vnffgd):
         return self.NSD_manager.upload_vnffdg(vnffgd)

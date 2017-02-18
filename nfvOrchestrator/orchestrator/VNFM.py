@@ -77,15 +77,15 @@ class VNFM_simple(VNFM):
 
     def __init__(self):
         # 获取已有的vm，填充数据结构,这里只能获取server的interface_list
-        VNFM_simple.vm_list=VIMProxy.VIMProxy.get_all_server()
-        for vm in VNFM_simple.vm_list:
-            interface_list=vm.interface_list()
-            for interface in interface_list:
-                id =interface.id
-                if id in VNFM_simple.interfaceId_ip_dic:
-                    ip=VNFM_simple.interfaceId_ip_dic[id]
-                    if ip.startwith("192.168.1."):
-                        VNFM_simple.vm_ip_dic[vm]=ip
+        # VNFM_simple.vm_list=VIMProxy.VIMProxy.get_all_server()
+        # for vm in VNFM_simple.vm_list:
+        #     interface_list=vm.interface_list()
+        #     for interface in interface_list:
+        #         id =interface.id
+        #         if id in VNFM_simple.interfaceId_ip_dic:
+        #             ip=VNFM_simple.interfaceId_ip_dic[id]
+        #             if ip.startwith("192.168.1."):
+        #                 VNFM_simple.vm_ip_dic[vm]=ip
         pass
 
         # self.vnfd=vnfd

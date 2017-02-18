@@ -6,14 +6,35 @@
 # @File    : VNFDcatalogue.py
 # @Software: PyCharm
 import yaml
+from orchestrator.models import Descriptor
 
+
+# 先从数据库获取最大的vnfd的assigned_id
+next_vnfd_id=0
+def set_next_id(next_id):
+    global next_vnfd_id
+    next_vnfd_id=next_id
+
+def get_next_id():
+    global next_vnfd_id
+    next_vnfd_id+=1
+    return next_vnfd_id
 
 # provider VNFD management,inlcuding vnfd curd
 class VNFD_manager:
 
     def __init__(self):
         # 从数据库读取
-        pass
+        max_assigned_id=-1
+        vnfd_in_db=Descriptor.objects.filter(type=1).values_list('assigned_id','yaml_content')
+        for e in vnfd_in_db:
+            vnfd_to_insert = VNFD()
+            vnfd_to_insert.init_from_db(e[1],e[0])
+            if(int(e[0])>max_assigned_id):
+                max_assigned_id=int(e[0])
+            VNFD_manager.VNFD_list.append(vnfd_to_insert)
+        if max_assigned_id!=-1:
+            set_next_id(max_assigned_id+1)
 
     VNFD_list=[]
 
@@ -21,6 +42,9 @@ class VNFD_manager:
         return VNFD_manager.VNFD_list
 
     def get_vnfd_by_name(self,name):
+        print('get_vnfd_by_name')
+        print(name)
+        print(VNFD_manager.VNFD_list)
         for vnfd in VNFD_manager.VNFD_list:
             if vnfd.name==name:
                 return vnfd
@@ -36,30 +60,37 @@ class VNFD_manager:
         return res
 
     def upload_vnfd(self,vnfd_content):
-        vnfd_to_insert=VNFD(vnfd_content)
+        vnfd_to_insert=VNFD()
+        vnfd_to_insert.init_from_web(vnfd_content)
         for vnfd in VNFD_manager.VNFD_list:
             if vnfd.name==vnfd_to_insert.name:
                 raise Exception("invalid vnfd ,name conflict")
         VNFD_manager.VNFD_list.append(vnfd_to_insert)
+        # 生成模型，存储到数据库
+        descriptor=Descriptor()
+        descriptor.type=1
+        descriptor.yaml_content = vnfd_content
+        descriptor.assigned_id=vnfd_to_insert.vnfd_id
+        descriptor.save()
 
 
     def delete_vnfd(self,vnfd_to_delete):
+        print(vnfd_to_delete)
         for vnfd in VNFD_manager.VNFD_list:
             if(vnfd.name==vnfd_to_delete.name):
                 VNFD_manager.VNFD_list.remove(vnfd)
+                Descriptor.objects.filter(type=1).filter(assigned_id=vnfd.vnfd_id).delete()
                 return True
         raise Exception("no match  vnfd name")
 
-# 先从数据库获取最大的vnfd的assigned_id
-next_vnfd_id=0
-def get_next_id():
-    global next_vnfd_id
-    next_vnfd_id+=1
-    return next_vnfd_id
+
 
 class VNFD:
+    def __init__(self):
+        pass
     # 通过接口上传VNFD，分配vnfd_id，并解析
-    def __init__(self, yaml_content):
+    def init_from_web(self, yaml_content):
+        print('__init__1')
         # 存入数据库的信息
         self.yaml_content = yaml_content
         # 分配id
@@ -104,7 +135,8 @@ class VNFD:
         self.vnf_carrier = None
 
     # 从数据库读取，重建VNFD对象
-    def __init__(self,yaml_content,id):
+    def init_from_db(self,yaml_content,id):
+        print('__init__2')
         # 存入数据库的信息
         self.yaml_content = yaml_content
         self.vnfd_id = id

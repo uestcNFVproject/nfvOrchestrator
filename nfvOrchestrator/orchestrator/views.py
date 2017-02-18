@@ -7,7 +7,9 @@ from django.views.generic import TemplateView
 from django.views.generic import View
 
 from orchestrator.models import rsp
+from orchestrator.models import Node_info
 from orchestrator.demodeploy import Demo_deploy
+from django.views.decorators.csrf import csrf_exempt
 from orchestrator import NFVO
 from orchestrator import VIMProxy
 from orchestrator import VNFM
@@ -19,11 +21,29 @@ from orchestrator import AlgorithmManager
 from orchestrator import FG_manager
 
 vim = VIMProxy.VIMProxy()
-nfvo = NFVO.init_NFVO(vim=vim, vnfm=VNFM.VNFM_simple(), NSD_manager=NSDcatalogue.NSD_manager(),
-                      VNFD_manager=VNFDcatalogue.VNFD_manager(), NS_manager=NScatalogue.NS_manager(),
-                      NFVI_manager=NFVIcatalogue.NFVI_manager(), algorith_manager=AlgorithmManager.AlgorithmManager(),
-                      FG_manager=FG_manager.FG_manager(vim))
+vnfm=VNFM.VNFM_simple()
+VNFD_manager=VNFDcatalogue.VNFD_manager()
+NSD_manager=NSDcatalogue.NSD_manager()
+NS_manager=NScatalogue.NS_manager()
+NFVI_manager=NFVIcatalogue.NFVI_manager()
+algorith_manager=AlgorithmManager.AlgorithmManager()
+FG_manager=FG_manager.FG_manager()
 
+nfvo = NFVO.init_NFVO(vim=vim, vnfm=vnfm, NSD_manager=NSD_manager,
+                      VNFD_manager=VNFD_manager, NS_manager=NS_manager,
+                      NFVI_manager=NFVI_manager, algorith_manager=algorith_manager,
+                      FG_manager=FG_manager)
+NSD_manager.set_vnfd_catalogue(VNFD_manager)
+FG_manager.set_nfvo(nfvo)
+
+class TestView(View):
+    def post(self, request, *args, **kwargs):
+        print('test post ')
+        return HttpResponse('ok', content_type="application/json")
+
+    def get(self, request, *args, **kwargs):
+        print('test get ')
+        return HttpResponse('ok', content_type="application/json")
 
 class WelcomeView(TemplateView):
     template_name = "welcome.html"
@@ -33,7 +53,129 @@ class MainView(TemplateView):
     template_name = "main.html"
 
 
-#
+class vnfdAddView(TemplateView):
+    template_name = "vnfd_add.html"
+
+
+class vnfdDeleteView(TemplateView):
+    template_name = "vnfd_delete.html"
+
+
+class moniter(View):
+    def post(self, request, *args, **kwargs):
+        print('moniter post')
+        # 处理localAgent上传的信息
+
+        json_info=str(request.body, encoding="utf-8")
+        dic_info = json.loads(json_info)
+        if dic_info != None:
+            # 进行存储
+            # 根据resRequestID在数据库中查询
+            try:
+                print(dic_info)
+                node_info=Node_info()
+                node_info.BaseInfo=str(dic_info['BaseInfo'])
+                node_info.NodeName = str(dic_info['BaseInfo']['NodeName'])
+                node_info.Time = str(dic_info['BaseInfo']['Time'])
+                node_info.RunTime = str(dic_info['BaseInfo']['RunTime'])
+                node_info.LoadInfo = str(dic_info['LoadInfo'])
+                node_info.Load1 = float(dic_info['LoadInfo']['Load1'])
+                node_info.Load5 = float(dic_info['LoadInfo']['Load5'])
+                node_info.Load15 = float(dic_info['LoadInfo']['Load15'])
+                node_info.TaskInfo = str(dic_info['TaskInfo'])
+                node_info.Taskstotal = int(dic_info['TaskInfo']['Taskstotal'])
+                node_info.TaskRunning = int(dic_info['TaskInfo']['TaskRunning'])
+                node_info.TaskSleeping = int(dic_info['TaskInfo']['TaskSleeping'])
+                node_info.TaskStopped = int(dic_info['TaskInfo']['TaskStopped'])
+                node_info.Taskzombie = int(dic_info['TaskInfo']['Taskzombie'])
+                node_info.CpuInfo = str(dic_info['CpuInfo'])
+                node_info.Us =float(dic_info['CpuInfo']['Us'])
+                node_info.Sy = float(dic_info['CpuInfo']['Sy'])
+                node_info.Ni = float(dic_info['CpuInfo']['Ni'])
+                node_info.Idle = float(dic_info['CpuInfo']['Idle'])
+                node_info.Wa = float(dic_info['CpuInfo']['Wa'])
+                node_info.Hi = float(dic_info['CpuInfo']['Hi'])
+                node_info.Si = float(dic_info['CpuInfo']['Si'])
+                node_info.MemInfo = str(dic_info['MemInfo'])
+                node_info.Memtotal = int(dic_info['MemInfo']['Memtotal'])
+                node_info.Memused = int(dic_info['MemInfo']['Memused'])
+                node_info.Memfree = int(dic_info['MemInfo']['Memfree'])
+                node_info.Membuffer = int(dic_info['MemInfo']['Membuffer'])
+                node_info.DiskInfo = str(dic_info['MemInfo'])
+                node_info.IOinfo = str(dic_info['IOinfo'])
+                node_info.save()
+            except Exception as e:
+                print(e)
+                return HttpResponse(json.dumps("message illegal"), content_type="application/json")
+            return HttpResponse("ok", content_type="application/json")
+        else:
+            return HttpResponse(json.dumps("no nodeinfo found"), content_type="application/json")
+
+    def get(self, request, *args, **kwargs):
+        print('moniter get')
+        # 处理用户的请求
+        nodeName = request.GET.get('nodeName', None)
+        if nodeName != None:
+            print('get one node info')
+            # 根据nodeName在数据库中查询
+            try:
+                p = Node_info.objects.get(NodeName=nodeName)
+            except Node_info.DoesNotExist:
+                return HttpResponse(json.dumps("no info found in db"), content_type="application/json")
+            json_str = json.dumps(p, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+            return HttpResponse(json_str, content_type="application/json")
+        else:
+            # 提取最新信息
+            print('get last node info')
+            try:
+                p = Node_info.objects.all().reverse()[0]
+                print(p)
+
+                Time = p.Time
+                RunTime = p.RunTime
+                NodeName = p.NodeName
+                BaseInfo={'RunTime':RunTime,'Time':Time,'NodeName':NodeName}
+
+                Load1 = p.Load1
+                Load5 = p.Load5
+                Load15 = p.Load15
+                LoadInfo = {'Load1':Load1,'Load5':Load5,'Load15':Load15}
+
+                TaskInfo = {}
+                Taskstotal = p.Taskstotal
+                TaskRunning = p.TaskRunning
+                TaskSleeping = p.TaskSleeping
+                TaskStopped = p.TaskStopped
+                Taskzombie = p.Taskzombie
+                TaskInfo={'Taskstotal':Taskstotal,'TaskRunning':TaskRunning,'TaskSleeping':TaskSleeping,'TaskStopped':TaskStopped,'Taskzombie':Taskzombie}
+
+                Us = p.Us
+                Sy = p.Sy
+                Ni = p.Ni
+                Idle = p.Idle
+                Wa = p.Wa
+                Hi = p.Hi
+                Si = p.Si
+                CpuInfo = {'Us':Us,'Sy':Sy,'Ni':Ni,'Idle':Idle,'Wa':Wa,'Hi':Hi,'Si':Si}
+
+                Memtotal = p.Memtotal
+                Memused = p.Memused
+                Memfree = p.Memfree
+                Membuffer = p.Membuffer
+                MemInfo = {'Memtotal':Memtotal,'Memused':Memused,'Memfree':Memfree,'Membuffer':Membuffer}
+
+                DiskInfo =p.DiskInfo
+                IOinfo = p.IOinfo
+
+
+                info_dic = {'BaseInfo': BaseInfo, 'LoadInfo': LoadInfo, 'TaskInfo': TaskInfo, 'CpuInfo': CpuInfo,
+                            'MemInfo': MemInfo, 'DiskInfo': DiskInfo, 'IOinfo': IOinfo}
+
+            except Node_info.DoesNotExist:
+                return HttpResponse(json.dumps("no info found in db"), content_type="application/json")
+            json_str = json.dumps(info_dic)
+            return HttpResponse(json_str, content_type="application/json")
+
 
 # odl request for rsp's sf name list
 class rspSFNameListView(View):
@@ -74,55 +216,51 @@ class vnfdListView(View):
     def get(self, request, *args, **kwargs):
         global nfvo
         vnfd_list = nfvo.find_all_vnfd()
-
         vnfd_content_list = []
         for vnfd in vnfd_list:
-            vnfd_content_list.append(yaml.dump(vnfd.yaml_content))
+            vnfd_content_list.append(yaml.load(vnfd.yaml_content))
         return HttpResponse(json.dumps(vnfd_content_list), content_type="application/json")
 
 
-class vnfdAddView(TemplateView):
-    template_name = "vnfd_add.html."
-
-
-class vnfdDeleteView(TemplateView):
-    template_name = "vnfd_delete.html."
 
 
 # handle vnfd curd
 class vnfdHandlerView(View):
     def post(self, request, *args, **kwargs):
         global nfvo
-        if request.path == '/main/vnfd_add/vnfd_handler/':
-            if (request.method == "POST"):
-                vnfd = request.POST.get('vnfd', None)
-                if vnfd is None:
-                    return HttpResponse(json.dumps("no vnfd"), content_type="application/json")
+        if (request.method == "POST"):
+            vnfd = request.POST.get('vnfd', None)
+            vnfd_name = request.POST.get('vnfdname', None)
+            if vnfd is None:
+                if vnfd_name is None:
+                    # 都为空，错误
+                    return HttpResponse(json.dumps("wrong page"), content_type="application/json")
+                else:
+                    # 删除vnfd
+                    print('delete vnfd')
+                    if nfvo is None:
+                        return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+                    try:
+                        nfvo.delete_vnfd_by_name(vnfd_name)
+                    except Exception as e:
+                        print(e)
+                        return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                    return HttpResponse(json.dumps("ok"), content_type="application/json")
+            else:
+                # 上传vnfd
+                print('upload vnfd')
                 if nfvo is None:
                     return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
                 try:
                     nfvo.upload_vnfd(vnfd)
                 except Exception as e:
+                    print(e)
                     return HttpResponse(json.dumps(str(e)), content_type="application/json")
                 return HttpResponse(json.dumps("ok"), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        if request.path == '/main/vnfd_delete/vnfd_handler/':
-            if (request.method == "POST"):
-                vnfd_name = request.POST.get('vnfdname', None)
-                if vnfd_name is None:
-                    return HttpResponse(json.dumps("no vnfd_name"), content_type="application/json")
+        else :
+            return HttpResponse(json.dumps("not supprot get"), content_type="application/json")
 
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
-                try:
-                    nfvo.delete_vnfd_by_name(vnfd_name)
-                except Exception as e:
-                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        return HttpResponse(json.dumps("wrong page"), content_type="application/json")
+
 
 
 # handle vnffgd list
