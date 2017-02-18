@@ -9,6 +9,27 @@
 import yaml
 import re
 from orchestrator import VNFDcatalogue
+from orchestrator.models import Descriptor
+next_nsd_id=0
+def get_next_nsd_id():
+    global next_nsd_id
+    next_nsd_id+=1
+    return next_nsd_id
+
+def set_next_nsd_id(next_id):
+    global next_nsd_id
+    next_nsd_id=next_id
+
+next_vnffgd_id=0
+def get_next_vnffgd_id():
+    global next_vnffgd_id
+    next_vnffgd_id+=1
+    return next_vnffgd_id
+
+def set_next_vnffgd_id(next_id):
+    global next_vnffgd_id
+    next_vnffgd_id=next_id
+
 
 
 # provider nsd management ,including nsd curd
@@ -16,13 +37,37 @@ class NSD_manager:
     def __init__(self):
         pass
         # 从数据库中读取已有NSD和VNFFGD
+        # 0==》dnsd
+        # 2==>vnffgd
+        max_assigned_id = -1
+        nsd_in_db = Descriptor.objects.filter(type=0).values_list('assigned_id', 'yaml_content')
+        for e in nsd_in_db:
+            nsd_to_insert = NSD()
+            nsd_to_insert.init_from_db(e[1], e[0])
+            if (int(e[0]) > max_assigned_id):
+                max_assigned_id = int(e[0])
+            NSD_manager.NSD_list.append(nsd_to_insert)
+        if max_assigned_id != -1:
+            set_next_nsd_id(max_assigned_id + 1)
+
+        max_assigned_id = -1
+        vnffgd_in_db = Descriptor.objects.filter(type=2).values_list('assigned_id', 'yaml_content')
+        for e in vnffgd_in_db:
+            vnffgd_to_insert = VNFFGD()
+            vnffgd_to_insert.init_from_db(e[1], e[0])
+            if (int(e[0]) > max_assigned_id):
+                max_assigned_id = int(e[0])
+            NSD_manager.VNFFGD_list.append(vnffgd_to_insert)
+        if max_assigned_id != -1:
+            set_next_vnffgd_id(max_assigned_id + 1)
+
+        print('nsd manager init over ')
 
     def set_vnfd_catalogue(self,vnfd_manager):
         self.vnfd_manager = vnfd_manager
 
 
     NSD_list=[]
-
     def get_all_nsd(self):
         return NSD_manager.NSD_list
 
@@ -39,17 +84,27 @@ class NSD_manager:
         return None
 
     def upload_nsd(self,nsd_content):
-        Nsd=NSD(nsd_content)
+        nsd_to_insert=NSD()
+        nsd_to_insert.init_from_web(nsd_content)
         for nsd in NSD_manager.NSD_list:
-            if nsd.nsd_id==Nsd.nsd_id or nsd.name==Nsd.name :
-                return False
-        # self.refine_nsd(NSD)
-        return NSD_manager.NSD_list.append(Nsd)
+            if nsd.name==nsd_to_insert.name :
+                raise Exception("invalid nsd ,name conflict")
+        NSD_manager.NSD_list.append(nsd_to_insert)
+        # 生成模型，存储到数据库
+        descriptor = Descriptor()
+        descriptor.type = 0
+        descriptor.yaml_content = nsd_content
+        descriptor.assigned_id = nsd_to_insert.nsd_id
+        descriptor.save()
+
+
+
 
     def delete_nsd_by_name(self,name):
         for nsd in NSD_manager.NSD_list:
             if(nsd.name==name):
                 NSD_manager.NSD_list.remove(nsd)
+                Descriptor.objects.filter(type=1).filter(assigned_id=nsd.nsd_id).delete()
                 return True
         return False
 
@@ -61,51 +116,7 @@ class NSD_manager:
         pass
 
 
-    # def refine_nsd(self,NSD):
-    #     # 有些nsd包含新的nfd信息，需要提取出来进行注册
-    #     self.register_vnfd(NSD)
-    #
-    #     # 根据其余的vnfd——name，提取vnfd
-    #     self.search_vnfd_in_nsd(NSD)
-    #
-    #     # 提取fgd的信息
-    #     self.search_fgd_in_nsd(NSD)
-    #
-    #     # 提取vld的信息
-    #     self.search_vld_in_nsd(NSD)
-    #
-    # def register_vnfd(self,NSD):
-    #     content = json.loads(NSD.content)
-    #     if "vnfd" in content:
-    #         vnfd__list = content["vnfd"]
-    #         for vnfd in vnfd__list:
-    #             self.vnfd_manager.upload_vnfd(vnfd)
-    #             NSD.vnfd_list.append(vnfd)
-    #
-    # # 搜索标准是vnfd.*:name
-    # def search_vnfd_in_nsd(self,NSD):
-    #     vnfd_name_list = []
-    #     for m in NSD.vnfd_pattern.finditer(NSD.content):
-    #         vnfd_name_list.append(m.group(1))
-    #     for vnfd_name in vnfd_name_list:
-    #         vnfd = self.vnfd_manager.get_vnfd_by_name(vnfd_name)
-    #         NSD.vnfd_list.append(vnfd)
-    #     return NSD.vnfd_list
-    #
-    #
-    # def search_fgd_in_nsd(self,NSD):
-    #     content = json.loads(NSD.content)
-    #     if "vnffgd" in content:
-    #         vnffgd_list = content["vnffgd"]
-    #         for vnffgd in vnffgd_list:
-    #             NSD.vnffgd_list.append(vnffgd)
-    #
-    # def search_vld_in_nsd(self,NSD):
-    #     content = json.loads(NSD.content)
-    #     if "vld" in content:
-    #         vld_list = content["vld"]
-    #         for vld in vld_list:
-    #             NSD.vld_list.append(vld)
+
 
 
 
@@ -120,16 +131,25 @@ class NSD_manager:
         return None
 
     def upload_vnffdg(self,vnffgd_content):
-        vnffgd=VNFFGD(vnffgd_content)
+        vnffgd=VNFFGD()
+        vnffgd.init_from_web(vnffgd_content)
         for tmp in NSD_manager.vnffdg_list:
             if tmp.name==vnffgd.name :
                 raise Exception("invalid vnffgd ,name conflict")
         return NSD_manager.vnffdg_list.append(vnffgd)
+        NSD_manager.NSD_list.append(nsd_to_insert)
+        # 生成模型，存储到数据库
+        descriptor = Descriptor()
+        descriptor.type = 2
+        descriptor.yaml_content = vnffgd_content
+        descriptor.assigned_id = vnffgd.vnffgd_id
+        descriptor.save()
 
     def delete_vnffdg_by_name(self,name):
         for tmp in NSD_manager.vnffdg_list:
             if(tmp.name==name):
                 NSD_manager.vnffdg_list.remove(tmp)
+                Descriptor.objects.filter(type=2).filter(assigned_id=tmp.vnffgd_id).delete()
                 return True
         return False
 
@@ -138,26 +158,22 @@ class NSD_manager:
 
 
 # 先从数据库获取最大的nsd的assigned_id
-next_nsd_id=0
-def get_next_nsd_id():
-    global next_nsd_id
-    next_nsd_id+=1
-    return next_nsd_id
+
 
 class NSD:
+    def __init__(self):
+        pass
+
     # 通过网页接口上传VNFFGD文件内容，分配id并进行解析
-    def __init__(self,content):
+    def init_from_web(self,content):
         self.yaml_content=content
-        self.id=get_next_nsd_id()
+        self.nsd_id=get_next_nsd_id()
         self.dic_content = yaml.load(self.yaml_content)
 
-        if 'metadata' not in self.dic_content or 'ID' not in self.dic_content['metadata']:
-            raise Exception("invalid nsd ,no metadata or  ID infomation")
-        self.id = self.dic_content['metadata']['ID']
+        if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
+            raise Exception("invalid nsd ,no metadata or  template_name infomation")
+        self.name = self.dic_content['metadata']['template_name']
 
-        if 'metadata' not in self.dic_content or 'name' not in self.dic_content['metadata']:
-            raise Exception("invalid nsd ,no metadata or  name infomation")
-        self.name = self.dic_content['metadata']['name']
 
         if 'topology_template' not in self.dic_content :
             raise Exception("invalid nsd ,no topology_template ")
@@ -203,18 +219,16 @@ class NSD:
 
 
     # 通过数据库上传已经加载的NSD文件内容，进行解析重铸
-    def __init__(self,content,id):
+    def init_from_db(self,content,id):
         self.yaml_content=content
-        self.id=id
+        self.nsd_id=id
         self.dic_content = yaml.load(self.yaml_content)
 
-        if 'metadata' not in self.dic_content or 'ID' not in self.dic_content['metadata']:
-            raise Exception("invalid nsd ,no metadata or  ID infomation")
-        self.id = self.dic_content['metadata']['ID']
+        if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
+            raise Exception("invalid nsd ,no metadata or  template_name infomation")
+        self.name = self.dic_content['metadata']['template_name']
 
-        if 'metadata' not in self.dic_content or 'name' not in self.dic_content['metadata']:
-            raise Exception("invalid nsd ,no metadata or  name infomation")
-        self.name = self.dic_content['metadata']['name']
+
 
         if 'topology_template' not in self.dic_content :
             raise Exception("invalid nsd ,no topology_template ")
@@ -263,18 +277,15 @@ class VLD:
         self.content=content
 
 # 先从数据库获取最大的vnffgd的assigned_id
-next_vnffgd_id=0
 
-def get_next_vnffgd_id():
-    global next_vnffgd_id
-    next_vnffgd_id+=1
-    return next_vnffgd_id
 
 class VNFFGD:
+    def __init__(self):
+        pass
     # 通过网络接口上传VNFFGD，分配id，并进行解析
-    def __init__(self, yaml_content):
+    def init_from_web(self, yaml_content):
         self.yaml_content = yaml_content
-        self.id=get_next_vnffgd_id()
+        self.vnffgd_id=get_next_vnffgd_id()
         self.dic_content = yaml.load(yaml_content)
 
         if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:
@@ -311,9 +322,9 @@ class VNFFGD:
                 self.vnffg_list.append(tmp)
 
     # 通过数据库上传VNFFGD，并进行解析
-    def __init__(self, yaml_content,id):
+    def init_from_db(self, yaml_content,id):
         self.yaml_content = yaml_content
-        self.id=id
+        self.vnffgd_id=id
         self.dic_content = yaml.load(yaml_content)
 
         if 'metadata' not in self.dic_content or 'template_name' not in self.dic_content['metadata']:

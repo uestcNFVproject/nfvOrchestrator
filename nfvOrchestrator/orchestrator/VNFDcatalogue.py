@@ -35,16 +35,13 @@ class VNFD_manager:
             VNFD_manager.VNFD_list.append(vnfd_to_insert)
         if max_assigned_id!=-1:
             set_next_id(max_assigned_id+1)
-
+        print('vnfd manager init over ')
     VNFD_list=[]
 
     def get_all_vnfd(self):
         return VNFD_manager.VNFD_list
 
     def get_vnfd_by_name(self,name):
-        print('get_vnfd_by_name')
-        print(name)
-        print(VNFD_manager.VNFD_list)
         for vnfd in VNFD_manager.VNFD_list:
             if vnfd.name==name:
                 return vnfd

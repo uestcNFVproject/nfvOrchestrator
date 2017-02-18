@@ -5,62 +5,67 @@
     <title>main</title>
 </head>
 <body>
-一键demo部署:<br>
-<form action="demodeploy/" method="post">
-    {% csrf_token %}
-    <input name="demotype" type="radio" value="webdemo"/>web应用:firewall+dpi
-    <input name="demotype" type="radio" value="imsdemo"/>ims:clearwater
-    <input type="submit"/>
-</form>
-<br><br><br><br>
-
+{#一键demo部署:<br>#}
+{#<form action="demodeploy/" method="post">#}
+{#    {% csrf_token %}#}
+{#    <input name="demotype" type="radio" value="webdemo"/>web应用:firewall+dpi#}
+{#    <input name="demotype" type="radio" value="imsdemo"/>ims:clearwater#}
+{#    <input type="submit"/>#}
+{#</form>#}
+{#<br>#}
+<div style="display:inline-block;">
 vnfd管理:<br>
 <a class="btn" href="vnfd_list" style="color:black;">查看vnfd</a><br>
 <a class="btn" href="vnfd_add" style="color:black;">添加vnfd</a><br>
 <a class="btn" href="vnfd_delete" style="color:black;">删除vnfd</a><br>
-<br><br><br><br>
+<br></div>&nbsp;
 
+<div style="display:inline-block;">
 vnffgd管理:<br>
 <a class="btn" href="vnffgd_list" style="color:black;">查看vnffgd</a><br>
 <a class="btn" href="vnffgd_add" style="color:black;">添加vnffgd</a><br>
 <a class="btn" href="vnffgd_delete" style="color:black;">删除vnffgd</a><br>
+<br></div>&nbsp;
 
-<br><br><br><br>
-
+<div style="display:inline-block;">
 nsd管理:<br>
-<a class="btn" href="nsd_list" style="color:black;">查看vnffgd</a><br>
-<a class="btn" href="nsd_add" style="color:black;">添加vnffgd</a><br>
-<a class="btn" href="nsd_delete" style="color:black;">删除vnffgd</a><br>
+<a class="btn" href="nsd_list" style="color:black;">查看nsd</a><br>
+<a class="btn" href="nsd_add" style="color:black;">添加nsd</a><br>
+<a class="btn" href="nsd_delete" style="color:black;">删除nsd</a><br>
 
-<br><br><br><br>
-
+<br></div>&nbsp;
+<div style="display:inline-block;">
 vnf管理:<br>
-<a class="btn" href="vnf_list" style="color:black;">查看ns实例</a><br>
-<a class="btn" href="deploy_vnf" style="color:black;">部署ns实例</a><br>
-<a class="btn" href="destory_vnf" style="color:black;">摧毁ns实例</a><br>
-<br><br><br><br>
-
+<a class="btn" href="vnf_list" style="color:black;">查看vnf实例</a><br>
+<a class="btn" href="deploy_vnf" style="color:black;">部署vnf实例</a><br>
+<a class="btn" href="destory_vnf" style="color:black;">摧毁vnf实例</a><br>
+<br></div>&nbsp;
+<div style="display:inline-block;">
 vnffg管理:<br>
 <a class="btn" href="vnffg_list" style="color:black;">查看vnffg实例</a><br>
 <a class="btn" href="deploy_vnffg" style="color:black;">部署vnffg实例</a><br>
 <a class="btn" href="destory_vnffg" style="color:black;">摧毁vnffg实例</a><br>
-<br><br><br><br>
+<br></div>&nbsp;
+<div style="display:inline-block;">
 
 ns管理:<br>
 <a class="btn" href="ns_list" style="color:black;">查看ns实例</a><br>
 <a class="btn" href="deploy_ns" style="color:black;">部署ns实例</a><br>
 <a class="btn" href="destory_ns" style="color:black;">摧毁ns实例</a><br>
-<br><br><br><br>
+<br></div>&nbsp;
 
-
+<div style="display:inline-block;">
 algorithm管理:<br>
-<a class="btn" href="algorithm_list" style="color:black;">查看现有算法</a>
-<a class="btn" href="add_algorithm" style="color:black;">添加算法</a>
-<a class="btn" href="delete_algorithm" style="color:black;">删除算法</a>
-<br><br><br><br>
+<a class="btn" href="algorithm_list" style="color:black;">查看现有算法</a><br>
+<a class="btn" href="add_algorithm" style="color:black;">添加算法</a><br>
+<a class="btn" href="delete_algorithm" style="color:black;">删除算法</a><br>
+<br></div>&nbsp;
 
+<div style="display:inline-block;">
 nfvi查看:<br>
-<a class="btn" href="compute_node_list" style="color:black;">查看计算节点</a>
-<a class="btn" href="switch_node_list" style="color:black;">查看网络节点</a>
+<a class="btn" href="compute_node_list" style="color:black;">查看计算节点</a><br>
+<a class="btn" href="switch_node_list" style="color:black;">查看网络节点</a><br>
+    <br>
+<br></div>&nbsp;
 </body>
 </html>

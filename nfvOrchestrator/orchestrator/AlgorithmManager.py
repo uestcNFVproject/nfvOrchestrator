@@ -64,17 +64,19 @@ class AlgorithmManager:
         # 寻找一个server，将vnfd部署在上面
         # 获取所有server
         server_list=nfvo.get_all_servers()
+        # server_list:[<Server: test6>, <Server: test5>, <Server: test4>, <Server: test3>, <Server: test2>, <Server: test1>]
         random_server_index=random.randint(0,len(server_list))
         server=server_list[random_server_index]
+        print(server)
         vnf_solution=Vnf_solution(vnfd=vnfd,server_instance=server,create_server=False,compute_node=None)
-        solution=Solution
+        solution=Solution()
         solution.vnf_solution_list.append(vnf_solution)
         return solution
 
     #现在只考虑只有一条sfp的vnffg
     def get_solution_for_vnffg(self,vnffgd, nfvo,vnffg_name):
 
-        solution = Solution
+        solution = Solution()
         # 为每一个sfp构造一个sfc solution
         vnf_index = 0
         for sfp in vnffgd.fp_vnfd_dic:

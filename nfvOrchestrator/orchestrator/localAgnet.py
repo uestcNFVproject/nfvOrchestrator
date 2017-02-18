@@ -63,24 +63,22 @@ def post_node_info():
         df_res = os.popen('df -hl').read()
         # 处理top_res
         NodeName = 'node-50'
-        top_res_spilt = top_res.split('\n')
-        print(top_res)
-        print(top_res_spilt)
+        top_res_spilt = top_res.split('top - ')[2].split('\n')
         first_line = top_res_spilt[0]
+
         first_line_split = re.split(' +', first_line)
-
         BaseInfo = {}
-        Time = first_line_split[2]
+        Time = first_line_split[0]
 
-        RunTime = first_line_split[4].rstrip(',')
+        RunTime = first_line_split[2].rstrip(',')+first_line_split[3].rstrip(',')
         BaseInfo['Time'] = Time
         BaseInfo['RunTime'] = RunTime
         BaseInfo['NodeName'] = NodeName
 
         LoadInfo = {}
-        Load1 = first_line_split[9].rstrip(',')
-        Load5 = first_line_split[10].rstrip(',')
-        Load15 = first_line_split[11].rstrip(',')
+        Load1 = first_line_split[8].rstrip(',')
+        Load5 = first_line_split[9].rstrip(',')
+        Load15 = first_line_split[10].rstrip(',')
         LoadInfo['Load1'] = Load1
         LoadInfo['Load5'] = Load5
         LoadInfo['Load15'] = Load15
@@ -171,11 +169,11 @@ def post_node_info():
         info_dic = {'BaseInfo': BaseInfo, 'LoadInfo': LoadInfo, 'TaskInfo': TaskInfo, 'CpuInfo': CpuInfo,
                     'MemInfo': MemInfo, 'DiskInfo': DiskInfo, 'IOinfo': IOinfo}
         # json_info=json.dumps(info_dic)
-        # post(monitor_ip, monitor_PORT, monitor_url, info_dic)
-        # print(Time + ' send node info：')
-        # print(json.dumps(info_dic))
+        post(monitor_ip, monitor_PORT, monitor_url, info_dic)
+        print(Time + ' send node info：')
+        print(json.dumps(info_dic))
         time.sleep(time2sleep)
 
 
 if __name__ == '__main__':
-    post_node_info()
+    get_node_info()

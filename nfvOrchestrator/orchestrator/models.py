@@ -105,8 +105,8 @@ class rsp(models.Model):
 
 
 class Descriptor(models.Model):
-    # 0==》vnfd
-    # 1==>vnffgd
+    # 0==》vnffgd
+    # 1==>vnfd
     # 2==>nsd
     type=models.IntegerField()
     yaml_content=models.CharField(max_length=2000,blank=True)

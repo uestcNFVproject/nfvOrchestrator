@@ -276,47 +276,39 @@ class vnffgdListView(View):
 
 
 class vnffgdAddView(TemplateView):
-    template_name = "vnffgd_add.html."
+    template_name = "vnffgd_add.html"
 
 
 class vnffgdDeleteView(TemplateView):
-    template_name = "vnffgd_delete.html."
+    template_name = "vnffgd_delete.html"
 
 
 # handle vnffgd curd
 class vnffgdHandlerView(View):
     def post(self, request, *args, **kwargs):
         global nfvo
-        if request.path == '/main/vnffgd_add/vnffgd_handler/':
+        if request.path == '/main/vnffgd_handler/':
             if (request.method == "POST"):
                 vnffgd = request.POST.get('vnffgd', None)
-                if vnffgd is None:
-                    return HttpResponse(json.dumps("no vnffgd"), content_type="application/json")
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
-                try:
-                    nfvo.upload_vnffgd(vnffgd)
-                except Exception as e:
-                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        if request.path == '/main/vnffgd_delete/vnffgd_handler/':
-            if (request.method == "POST"):
                 vnffgd_name = request.POST.get('vnffgdname', None)
-                if vnffgd_name is None:
-                    return HttpResponse(json.dumps("no vnffgd_name"), content_type="application/json")
-
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
-                try:
-                    nfvo.delete_vnffgd_by_name(vnffgd_name)
-                except Exception as e:
-                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        return HttpResponse(json.dumps("wrong page"), content_type="application/json")
+                if vnffgd is None:
+                    if vnffgd_name is None:
+                        return HttpResponse(json.dumps("no vnffgd_name and vnffgd"), content_type="application/json")
+                    if nfvo is None:
+                        return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+                    # 删除
+                    try:
+                        nfvo.delete_vnffgd_by_name(vnffgd_name)
+                    except Exception as e:
+                        return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                    return HttpResponse(json.dumps("ok"), content_type="application/json")
+                else:
+                    # 增加vnffgd
+                    try:
+                        nfvo.upload_vnffgd(vnffgd)
+                    except Exception as e:
+                        return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                    return HttpResponse(json.dumps("ok"), content_type="application/json")
 
 
 # handle nsd list
@@ -331,47 +323,42 @@ class nsdListView(View):
 
 
 class nsdAddView(TemplateView):
-    template_name = "nsd_add.html."
+    template_name = "nsd_add.html"
 
 
 class nsdDeleteView(TemplateView):
-    template_name = "nsdd_delete.html."
+    template_name = "nsdd_delete.html"
 
 
 # handle nsd curd
 class nsdHandlerView(View):
     def post(self, request, *args, **kwargs):
         global nfvo
-        if request.path == '/main/nsd_add/nsd_handler/':
+        if request.path == '/main/nsd_handler/':
             if (request.method == "POST"):
                 nsd = request.POST.get('nsd', None)
-                if nsd is None:
-                    return HttpResponse(json.dumps("no nsd"), content_type="application/json")
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
-                try:
-                    nfvo.upload_nsd(nsd)
-                except Exception as e:
-                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        if request.path == '/main/nsd_delete/nsd_handler/':
-            if (request.method == "POST"):
                 nsd_name = request.POST.get('nsdname', None)
-                if nsd_name is None:
-                    return HttpResponse(json.dumps("no nsd_name"), content_type="application/json")
 
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
-                try:
-                    nfvo.delete_nsd_by_name(nsd_name)
-                except Exception as e:
-                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        return HttpResponse(json.dumps("wrong page"), content_type="application/json")
+                if nsd is None:
+
+                    if nsd_name is None:
+                        return HttpResponse(json.dumps("no nsd_name and nsd"), content_type="application/json")
+                    if nfvo is None:
+                        return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+                    # 删除
+                    try:
+                        nfvo.delete_nsd_by_name(nsd_name)
+                    except Exception as e:
+                        return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                    return HttpResponse(json.dumps("ok"), content_type="application/json")
+                else:
+                    # 上传nsd
+
+                    try:
+                        nfvo.upload_nsd(nsd)
+                    except Exception as e:
+                        return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                    return HttpResponse(json.dumps("ok"), content_type="application/json")
 
 # handle vnf list
 class vnfListView(View):
@@ -381,44 +368,40 @@ class vnfListView(View):
         return HttpResponse(json.dumps(vnf_list), content_type="application/json")
 
 class vnfDeployView(TemplateView):
-    template_name = "vnf_deploy.html."
+    template_name = "vnf_deploy.html"
 
 
 class vnfDestoryView(TemplateView):
-    template_name = "vnf_destory.html."
+    template_name = "vnf_destory.html"
 
 
 # handle vnf curd
 class vnfHandlerView(View):
     def post(self, request, *args, **kwargs):
         global nfvo
-        if request.path == '/main/deploy_vnf/vnf_handler/':
+        if request.path == '/main/vnf_handler/':
             if (request.method == "POST"):
                 vnfd_name = request.POST.get('vnfd_name', None)
                 vnf_instance_name = request.POST.get('vnf_instance_name', None)
+                if vnfd_name is None and vnf_instance_name is None:
+                    return HttpResponse(json.dumps("no vnfd_name and vnf_instance name"), content_type="application/json")
                 if vnfd_name is None:
-                    return HttpResponse(json.dumps("no vnfd_name"), content_type="application/json")
-                if vnf_instance_name is None:
-                    return HttpResponse(json.dumps("no vnf_instance_name"), content_type="application/json")
+                    # 删除
+                    if nfvo is None:
+                        return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+                    try:
+                        print('delete vnf instance')
+                        res=nfvo.destory_vnf_instance_by_name(vnf_instance_name)
+                    except Exception as e:
+                        return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                    return HttpResponse(json.dumps(res), content_type="application/json")
+                # 部署
                 if nfvo is None:
                     return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
                 try:
-                    nfvo.deploy_vnf_instance_by_vnfd_name(vnfd_name,vnf_instance_name)
-                except Exception as e:
-                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
-            else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        if request.path == '/main/destory_vnf/vnf_handler/':
-            if (request.method == "POST"):
-                vnf_instance_name = request.POST.get('vnf_instance_name', None)
-                if vnf_instance_name is None:
-                    return HttpResponse(json.dumps("no vnf_instance_name"), content_type="application/json")
-
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
-                try:
-                    nfvo.destory_vnf_instance_by_name(vnf_instance_name)
+                    print('deploy vnf instance')
+                    res=nfvo.deploy_vnf_instance_by_vnfd_name(vnfd_name,vnf_instance_name)
+                    return HttpResponse(json.dumps(res), content_type="application/json")
                 except Exception as e:
                     return HttpResponse(json.dumps(str(e)), content_type="application/json")
                 return HttpResponse(json.dumps("ok"), content_type="application/json")
@@ -433,11 +416,11 @@ class vnffgListView(View):
         return HttpResponse(json.dumps(vnffg_list), content_type="application/json")
 
 class vnffgDeployView(TemplateView):
-    template_name = "vnffg_deploy.html."
+    template_name = "vnffg_deploy.html"
 
 
 class vnffgDestoryView(TemplateView):
-    template_name = "vnffg_destory.html."
+    template_name = "vnffg_destory.html"
 
 
 # handle nsd curd
@@ -486,16 +469,17 @@ class nsListView(View):
         return HttpResponse(json.dumps(ns_list), content_type="application/json")
 
 class nsDeployView(TemplateView):
-    template_name = "ns_deploy.html."
+    template_name = "ns_deploy.html"
 
 
 class nsDestoryView(TemplateView):
-    template_name = "ns_destory.html."
+    template_name = "ns_destory.html"
 
 
 # handle ns curd
 class nsHandlerView(View):
     def post(self, request, *args, **kwargs):
+        return HttpResponse(json.dumps("ok"), content_type="application/json")
         global nfvo
         if request.path == '/main/deploy_ns/ns_handler/':
             if (request.method == "POST"):
@@ -540,12 +524,12 @@ class algorithmListView(View):
 
 
 class algorithmAddView(TemplateView):
-    template_name = "algorithm_add.html."
+    template_name = "algorithm_add.html"
 
 
 
 class algorithmDeleteView(TemplateView):
-    template_name = "algorithm_delete.html."
+    template_name = "algorithm_delete.html"
 
 
 # handle algorithm curd

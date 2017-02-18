@@ -84,7 +84,7 @@ class NFVO:
 
     def destory_vnf_instance_by_name(self, name):
         vnf_instance=self.get_vnf_install_by_name(name)
-        self.destory_vnf_instance(vnf_instance)
+        return self.destory_vnf_instance(vnf_instance)
 
 
     def get_all_vnf_instances(self):
@@ -145,12 +145,15 @@ class NFVO:
     def get_all_switch_node(self):
         return self.NFVI_manager.get_all_switch_node()
 
-    # algorithm manager
+
     def get_server_ip(self,server):
         return self.vnfm.get_server_ip(server)
     def get_sff_name(self,sf_ip):
         return self.FG_manager.get_sff_name(sf_ip)
+
+    # algorithm manager
     def get_all_alogorithm(self):
+        self.algorith_manager
         pass
 
     def upload_alorithm(self,algorithm_name,algorithm_content):
@@ -212,7 +215,9 @@ class NFVO:
         if self.NS_manager.check_vnf_instance_name_conflic(vnf_instance_name):
             raise Exception("name conflict")
         # 获取解决方案
+        print('get solution')
         solution = self.algorith_manager.get_solution_for_vnfd(vnfd, self)
+        print(solution)
         # 执行部署
         vnf_instance=None
         for vnf_solution in solution.vnf_solution_list:
