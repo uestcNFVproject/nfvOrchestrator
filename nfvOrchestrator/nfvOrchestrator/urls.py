@@ -52,10 +52,23 @@ from orchestrator.views import nsDeployView
 from orchestrator.views import nsDestoryView
 from orchestrator.views import nsHandlerView
 
-from orchestrator.views import algorithmListView
-from orchestrator.views import algorithmDeleteView
-from orchestrator.views import algorithmAddView
-from orchestrator.views import algorithmHandlerView
+from orchestrator.views import ns_algorithm_handler
+from orchestrator.views import nsActiveAlgorithm
+from orchestrator.views import nsAlgorithmListView
+from orchestrator.views import activeNsAlgorithm
+from orchestrator.views import addNsAlgorithm
+
+from orchestrator.views import vnffg_algorithm_handler
+from orchestrator.views import vnffgActiveAlgorithm
+from orchestrator.views import vnffgAlgorithmListView
+from orchestrator.views import activeVnffgAlgorithm
+from orchestrator.views import addVnffgAlgorithm
+
+from orchestrator.views import vnf_algorithm_handler
+from orchestrator.views import vnfActiveAlgorithm
+from orchestrator.views import vnfAlgorithmListView
+from orchestrator.views import activeVnfAlgorithm
+from orchestrator.views import addVnfAlgorithm
 
 from orchestrator.views import computeNodeListView
 from orchestrator.views import switchNodeListView
@@ -102,11 +115,28 @@ urlpatterns = [
     url(r'^main/deploy_ns$', nsDeployView.as_view(), name='nsddadd'),
     url(r'^main/destory_ns$', nsDestoryView.as_view(), name='nsddelete'),
     url(r'^main/ns_handler/$', nsHandlerView.as_view(), name='nsdhandler'),
-    # algorithm curd
-    url(r'^main/algorithm_list$', algorithmListView.as_view(), name='nsdlistGet'),
-    url(r'^main/add_algorithm$', algorithmAddView.as_view(), name='nsddadd'),
-    url(r'^main/delete_algorithm$', algorithmDeleteView.as_view(), name='nsddelete'),
-    url(r'^main/algorithm_handler/$', algorithmHandlerView.as_view(), name='nsdhandler'),
+
+    # ns algorithm
+    url(r'^main/ns_algorithm_list$', nsAlgorithmListView.as_view(), name='ns algorithm list'),
+    url(r'^main/ns_active_algorithm$', nsActiveAlgorithm.as_view(), name='ns_active_algorithm$'),
+    url(r'^main/active_ns_algorithm$', activeNsAlgorithm.as_view(), name='active_ns_algorithm$'),
+    url(r'^main/add_ns_algorithm$', addNsAlgorithm.as_view(), name='add_ns_algorithm$'),
+    url(r'^main/ns_algorithm_handler/$', ns_algorithm_handler.as_view(), name='add_ns_algorithm$'),
+
+    # vnffg algorithm
+    url(r'^main/vnffg_algorithm_list$', vnffgAlgorithmListView.as_view(), name='vnffg_algorithm_list$'),
+    url(r'^main/vnffg_active_algorithm$', vnffgActiveAlgorithm.as_view(), name='vnffg_active_algorithm$'),
+    url(r'^main/active_vnffg_algorithm$', activeVnffgAlgorithm.as_view(), name='active_vnffg_algorithm$'),
+    url(r'^main/add_vnffg_algorithm$', addVnffgAlgorithm.as_view(), name='add_vnffg_algorithm$'),
+    url(r'^main/vnffg_algorithm_handler/$', vnffg_algorithm_handler.as_view(), name='add_vnffg_algorithm$'),
+
+    # vnf algorithm
+    url(r'^main/vnf_algorithm_list$', vnfAlgorithmListView.as_view(), name='vnffg_algorithm_list$'),
+    url(r'^main/vnf_active_algorithm$', vnfActiveAlgorithm.as_view(), name='vnffg_active_algorithm$'),
+    url(r'^main/active_vnf_algorithm$', activeVnfAlgorithm.as_view(), name='active_vnffg_algorithm$'),
+    url(r'^main/add_vnf_algorithm$', addVnfAlgorithm.as_view(), name='add_vnffg_algorithm$'),
+    url(r'^main/vnf_algorithm_handler/$', vnf_algorithm_handler.as_view(), name='add_vnffg_algorithm$'),
+
     # nfvi
     url(r'^main/compute_node_list$', computeNodeListView.as_view(), name='nsdlistGet'),
     url(r'^main/switch_node_list$', switchNodeListView.as_view(), name='nsdlistGet'),

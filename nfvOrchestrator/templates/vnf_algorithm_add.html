@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>algorithm_add</title>
+</head>
+<body>
+<form action="vnf_algorithm_handler/" method="post">
+    {% csrf_token %}
+    vnf algorithm name: <input type="text" name="algorithm_name" /><br>
+    algorithm content(be careful with indentation):<br>
+    <textarea cols="200" rows="10" id="contactus" name="algorithm_content"></textarea><br>
+    <input type="submit"/>
+</form>
+</body>
+</html>

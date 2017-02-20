@@ -2,25 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9de5fc1d-acee-497b-8395-fe56d731dd91" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/orchestrator/templates_examples/nsd_dpi_fw.yaml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/py.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/orchestrator/tests/testAlgorithmM.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/orchestrator/tests/testStr.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/vnf_algorithm_active.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/vnf_algorithm_add.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/vnffg_algorithm_active.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/vnffg_algorithm_add.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/algorithm_add.html" afterPath="$PROJECT_DIR$/templates/ns_algorithm_add.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/algorithm_delete.html" afterPath="$PROJECT_DIR$/templates/ns_algorithm_active.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nfvOrchestrator/urls.py" afterPath="$PROJECT_DIR$/nfvOrchestrator/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/AlgorithmManager.py" afterPath="$PROJECT_DIR$/orchestrator/AlgorithmManager.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/NFVIcatalogue.py" afterPath="$PROJECT_DIR$/orchestrator/NFVIcatalogue.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/NFVO.py" afterPath="$PROJECT_DIR$/orchestrator/NFVO.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/NSDcatalogue.py" afterPath="$PROJECT_DIR$/orchestrator/NSDcatalogue.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/VNFDcatalogue.py" afterPath="$PROJECT_DIR$/orchestrator/VNFDcatalogue.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/localAgnet.py" afterPath="$PROJECT_DIR$/orchestrator/localAgnet.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/models.py" afterPath="$PROJECT_DIR$/orchestrator/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/templates_examples/vnfd_dpi.yaml" afterPath="$PROJECT_DIR$/orchestrator/templates_examples/vnfd_dpi.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/tests.py" afterPath="$PROJECT_DIR$/orchestrator/tests.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/orchestrator/views.py" afterPath="$PROJECT_DIR$/orchestrator/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/main.html" afterPath="$PROJECT_DIR$/templates/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/ns_deploy.html" afterPath="$PROJECT_DIR$/templates/ns_deploy.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/vnf_deploy.html" afterPath="$PROJECT_DIR$/templates/vnf_deploy.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/vnf_destory.html" afterPath="$PROJECT_DIR$/templates/vnf_destory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/vnffg_deploy.html" afterPath="$PROJECT_DIR$/templates/vnffg_deploy.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/vnffg_destory.html" afterPath="$PROJECT_DIR$/templates/vnffg_destory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/vnffgd_delete.html" afterPath="$PROJECT_DIR$/templates/vnffgd_delete.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/vnfd_add.html" afterPath="$PROJECT_DIR$/templates/vnfd_add.html" />
     </list>
     <ignored path="nfvOrchestrator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,30 +31,32 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest Coverage Results" MODIFIED="1482318356450" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest_test_get_hypervisors.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest.test_get_hypervisors Coverage Results" MODIFIED="1482318210538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$py_test_in_testOpenStackOriApi_py.coverage" NAME="py.test in testOpenStackOriApi.py Coverage Results" MODIFIED="1482318004610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testAcl.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testAcl Coverage Results" MODIFIED="1482293687639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest_test_get_all_servers.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest.test_get_all_servers Coverage Results" MODIFIED="1482320295649" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$localAgnet.coverage" NAME="localAgnet Coverage Results" MODIFIED="1487317308418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vim" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$manage.coverage" NAME="manage Coverage Results" MODIFIED="1483497508883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$testStr.coverage" NAME="testStr Coverage Results" MODIFIED="1487556829688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/orchestrator/tests" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest_test_get_hosts.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest.test_get_hosts Coverage Results" MODIFIED="1482318117882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testSfc.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testSfc Coverage Results" MODIFIED="1482292949868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testSff.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testSff Coverage Results" MODIFIED="1482292299531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testNSDcatalogue_myTest_test_contains_new_vnfd.coverage" NAME="Test: orchestrator.tests.testNSDcatalogue.myTest.test_contains_new_vnfd Coverage Results" MODIFIED="1482397506706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$countLIne.coverage" NAME="countLIne Coverage Results" MODIFIED="1482670392653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$tests__1_.coverage" NAME="tests (1) Coverage Results" MODIFIED="1487312010296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vim" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testSfMetaData.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testSfMetaData Coverage Results" MODIFIED="1482293079209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testVnf.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testVnf Coverage Results" MODIFIED="1482291701553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest Coverage Results" MODIFIED="1482318356450" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest_test_get_hypervisors.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest.test_get_hypervisors Coverage Results" MODIFIED="1482318210538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testClasdifier.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testClasdifier Coverage Results" MODIFIED="1482294089123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$tests.coverage" NAME="tests Coverage Results" MODIFIED="1487384483136" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/orchestrator" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$py_test_in_testOpenStackOriApi_py.coverage" NAME="py.test in testOpenStackOriApi.py Coverage Results" MODIFIED="1482318004610" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testNode.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testNode Coverage Results" MODIFIED="1482291645486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testAcl.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testAcl Coverage Results" MODIFIED="1482293687639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest_test_get_all_servers.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest.test_get_all_servers Coverage Results" MODIFIED="1482320295649" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testSfp.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testSfp Coverage Results" MODIFIED="1482293325624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$localAgnet.coverage" NAME="localAgnet Coverage Results" MODIFIED="1487317308418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/vim" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi.coverage" NAME="Test: orchestrator.testOdlApi Coverage Results" MODIFIED="1482289696147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$manage.coverage" NAME="manage Coverage Results" MODIFIED="1483497508883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nfvOrchestrator$testAlgorithmM.coverage" NAME="testAlgorithmM Coverage Results" MODIFIED="1487495274535" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/orchestrator/tests" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testRsp.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testRsp Coverage Results" MODIFIED="1482293887374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOpenStackOriApi_myTest_test_get_hosts.coverage" NAME="Test: orchestrator.tests.testOpenStackOriApi.myTest.test_get_hosts Coverage Results" MODIFIED="1482318117882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$openstackOriApiUtil.coverage" NAME="openstackOriApiUtil Coverage Results" MODIFIED="1482230105195" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/orchestrator" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testOdlApi_myTest_testClasdifier.coverage" NAME="Test: orchestrator.tests.testOdlApi.myTest.testClasdifier Coverage Results" MODIFIED="1482318033838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testSfc.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testSfc Coverage Results" MODIFIED="1482292949868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_testOdlApi_myTest_testSff.coverage" NAME="Test: orchestrator.testOdlApi.myTest.testSff Coverage Results" MODIFIED="1482292299531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/nfvOrchestrator$localAgnet__1_.coverage" NAME="localAgnet (1) Coverage Results" MODIFIED="1487385131160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/orchestrator" />
-    <SUITE FILE_PATH="coverage/nfvOrchestrator$Test__orchestrator_tests_testNSDcatalogue_myTest_test_contains_new_vnfd.coverage" NAME="Test: orchestrator.tests.testNSDcatalogue.myTest.test_contains_new_vnfd Coverage Results" MODIFIED="1482397506706" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -83,18 +83,38 @@
       <file leaf-file-name="NFVO.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/orchestrator/NFVO.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="155" column="29" lean-forward="false" selection-start-line="155" selection-start-column="29" selection-end-line="155" selection-end-column="29" />
+            <state relative-caret-position="185">
+              <caret line="141" column="46" lean-forward="false" selection-start-line="141" selection-start-column="46" selection-end-line="141" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AlgorithmManager.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/orchestrator/AlgorithmManager.py">
+      <file leaf-file-name="NFVIcatalogue.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/orchestrator/NFVIcatalogue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+            <state relative-caret-position="210">
+              <caret line="135" column="54" lean-forward="false" selection-start-line="135" selection-start-column="54" selection-end-line="135" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="localAgnet.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/orchestrator/localAgnet.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="214">
+              <caret line="65" column="58" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testStr.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/orchestrator/tests/testStr.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -103,8 +123,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nfvOrchestrator/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="105" column="44" lean-forward="false" selection-start-line="105" selection-start-column="44" selection-end-line="105" selection-end-column="44" />
+            <state relative-caret-position="345">
+              <caret line="140" column="52" lean-forward="true" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
               <folding>
                 <element signature="e#649#681#0" expanded="true" />
               </folding>
@@ -112,8 +132,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vnffg_deploy.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/vnffg_deploy.html">
+      <file leaf-file-name="ns_algorithm_active.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/ns_algorithm_active.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/orchestrator/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="692" column="42" lean-forward="true" selection-start-line="692" selection-start-column="42" selection-end-line="692" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vnf_algorithm_active.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/vnf_algorithm_active.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
               <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
@@ -122,101 +162,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vnffg_destory.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/vnffg_destory.html">
+      <file leaf-file-name="AlgorithmManager.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/orchestrator/AlgorithmManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="52" lean-forward="false" selection-start-line="9" selection-start-column="52" selection-end-line="9" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ns_deploy.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/ns_deploy.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="49" lean-forward="false" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/main.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="67" column="8" lean-forward="false" selection-start-line="67" selection-start-column="8" selection-end-line="67" selection-end-column="8" />
+            <state relative-caret-position="195">
+              <caret line="22" column="9" lean-forward="false" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#666#672#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#951#957#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#1216#1222#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#1489#1495#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#1776#1782#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#2043#2049#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#2;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#2330#2336#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#7;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#1;n#div#7;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#2556#2562#0#HTML" expanded="true" />
-                <marker date="1487418946579" expanded="false" signature="2433:2445" ph="..." />
+                <element signature="e#165#178#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/orchestrator/views.py">
+      <file leaf-file-name="testAlgorithmM.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/orchestrator/tests/testAlgorithmM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="521" column="40" lean-forward="false" selection-start-line="521" selection-start-column="40" selection-end-line="521" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vnfd_delete.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/vnfd_delete.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vnf_deploy.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/vnf_deploy.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="107" lean-forward="true" selection-start-line="10" selection-start-column="107" selection-end-line="10" selection-end-column="107" />
+            <state relative-caret-position="555">
+              <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -257,6 +219,8 @@
       <find>&lt;br&gt;&lt;br&gt;</find>
       <find>deploy_ns</find>
       <find>html.</find>
+      <find>vnf_algorithm_list</find>
+      <find>vnf_active_algorithm</find>
     </findStrings>
     <replaceStrings>
       <replace>intotal</replace>
@@ -269,15 +233,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/orchestrator/httpUtil.py" />
-        <option value="$PROJECT_DIR$/orchestrator/tests/testOdlApi.py" />
-        <option value="$PROJECT_DIR$/orchestrator/OpenStackOriApi.py" />
-        <option value="$PROJECT_DIR$/orchestrator/tests/testOpenStackOriApi.py" />
-        <option value="$PROJECT_DIR$/orchestrator/orchestrator.py" />
-        <option value="$PROJECT_DIR$/orchestrator/infoObjects.py" />
-        <option value="$PROJECT_DIR$/orchestrator/NFVIResourcesREpository.py" />
-        <option value="$PROJECT_DIR$/orchestrator/NSCatalogue.py" />
-        <option value="$PROJECT_DIR$/orchestrator/NFVInstancesRepository.py" />
         <option value="$PROJECT_DIR$/orchestrator/tests/testNFVO.py" />
         <option value="$PROJECT_DIR$/orchestrator/solution.py" />
         <option value="$PROJECT_DIR$/orchestrator/VNFCatalogue.py" />
@@ -285,7 +240,6 @@
         <option value="$PROJECT_DIR$/orchestrator/tests/testNSDcatalogue.py" />
         <option value="$PROJECT_DIR$/orchestrator/nsd_example.py" />
         <option value="$PROJECT_DIR$/orchestrator/vnfd_example.py" />
-        <option value="$PROJECT_DIR$/orchestrator/NFVIcatalogue.py" />
         <option value="$PROJECT_DIR$/orchestrator/VIMProxy.py" />
         <option value="$PROJECT_DIR$/orchestrator/NScatalogue.py" />
         <option value="$PROJECT_DIR$/countLIne.py" />
@@ -295,7 +249,6 @@
         <option value="$PROJECT_DIR$/orchestrator/demodeploy.py" />
         <option value="$PROJECT_DIR$/orchestrator/systemSettings.py" />
         <option value="$PROJECT_DIR$/templates/vnfd_delete.html" />
-        <option value="$PROJECT_DIR$/templates/vnfd_add.html" />
         <option value="$PROJECT_DIR$/vim/tests.py" />
         <option value="$PROJECT_DIR$/vim/localAgnet.py" />
         <option value="$PROJECT_DIR$/orchestrator/VNFM.py" />
@@ -312,14 +265,25 @@
         <option value="$PROJECT_DIR$/orchestrator/NSDcatalogue.py" />
         <option value="$PROJECT_DIR$/templates/vnf_deploy.html" />
         <option value="$PROJECT_DIR$/templates/vnf_destory.html" />
-        <option value="$PROJECT_DIR$/orchestrator/AlgorithmManager.py" />
-        <option value="$PROJECT_DIR$/orchestrator/views.py" />
         <option value="$PROJECT_DIR$/templates/vnffg_deploy.html" />
         <option value="$PROJECT_DIR$/templates/vnffg_destory.html" />
         <option value="$PROJECT_DIR$/templates/ns_deploy.html" />
+        <option value="$PROJECT_DIR$/templates/vnfd_add.html" />
+        <option value="$PROJECT_DIR$/templates/ns_algorithm_active.html" />
         <option value="$PROJECT_DIR$/templates/main.html" />
+        <option value="$PROJECT_DIR$/templates/vnffg_algorithm_active.html" />
+        <option value="$PROJECT_DIR$/orchestrator/tests/testAlgorithmM.py" />
         <option value="$PROJECT_DIR$/nfvOrchestrator/urls.py" />
+        <option value="$PROJECT_DIR$/templates/ns_algorithm_add.html" />
+        <option value="$PROJECT_DIR$/templates/vnffg_algorithm_add.html" />
+        <option value="$PROJECT_DIR$/templates/vnf_algorithm_add.html" />
         <option value="$PROJECT_DIR$/orchestrator/NFVO.py" />
+        <option value="$PROJECT_DIR$/vnf_reuse_random_alg.py" />
+        <option value="$PROJECT_DIR$/orchestrator/AlgorithmManager.py" />
+        <option value="$PROJECT_DIR$/templates/vnf_algorithm_active.html" />
+        <option value="$PROJECT_DIR$/orchestrator/tests/testStr.py" />
+        <option value="$PROJECT_DIR$/orchestrator/views.py" />
+        <option value="$PROJECT_DIR$/orchestrator/NFVIcatalogue.py" />
       </list>
     </option>
   </component>
@@ -334,6 +298,22 @@
     <option name="y" value="24" />
     <option name="width" value="1855" />
     <option name="height" value="989" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>AngularJS</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -361,20 +341,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="nfvOrchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nfvOrchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nfvOrchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vnfm" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -420,39 +386,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates_examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nfvOrchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nfvOrchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="orchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="migrations" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nfvOrchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nfvOrchestrator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nfvOrchestrator" />
+              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -465,7 +399,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="D:\nodejs\node.exe" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="js.eslint.eslintPackage" value="" />
   </component>
@@ -479,11 +413,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/orchestrator/templates_examples" />
       <recent name="$PROJECT_DIR$/orchestrator" />
       <recent name="F:\github\nfvOrchestrator\nfvOrchestrator\templates" />
       <recent name="E:\github\nfvOrchestrator\nfvOrchestrator\orchestrator\static\img" />
-      <recent name="E:\github\nfvOrchestrator\nfvOrchestrator\orchestrator\static" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\github\nfvOrchestrator\nfvOrchestrator\orchestrator" />
@@ -493,7 +427,7 @@
       <recent name="E:\github\nfvOrchestrator\nfvOrchestrator\orchestrator\static\img" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.localAgnet (1)">
+  <component name="RunManager" selected="Python.testStr">
     <configuration default="false" name="tests" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -508,27 +442,6 @@
       <module name="nfvOrchestrator" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/orchestrator/tests.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="main.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/nfvOrchestrator/templates/main.html">
-      <method />
-    </configuration>
-    <configuration default="false" name="tests (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/vim" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="nfvOrchestrator" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/vim/tests.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -565,6 +478,42 @@
       <module name="nfvOrchestrator" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/orchestrator/localAgnet.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="testAlgorithmM" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/orchestrator/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="nfvOrchestrator" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/orchestrator/tests/testAlgorithmM.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="testStr" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/orchestrator/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="nfvOrchestrator" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/orchestrator/tests/testStr.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -832,18 +781,18 @@
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Django server.nfvOrchestrator" />
       <item index="1" class="java.lang.String" itemvalue="Python.tests" />
-      <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.main.html" />
-      <item index="3" class="java.lang.String" itemvalue="Python.tests (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Python.localAgnet" />
-      <item index="5" class="java.lang.String" itemvalue="Python.localAgnet (1)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.localAgnet" />
+      <item index="3" class="java.lang.String" itemvalue="Python.localAgnet (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.testAlgorithmM" />
+      <item index="5" class="java.lang.String" itemvalue="Python.testStr" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.localAgnet (1)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.tests" />
-        <item index="2" class="java.lang.String" itemvalue="Python.localAgnet" />
-        <item index="3" class="java.lang.String" itemvalue="Python.tests (1)" />
-        <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.main.html" />
+        <item index="0" class="java.lang.String" itemvalue="Python.testStr" />
+        <item index="1" class="java.lang.String" itemvalue="Python.testAlgorithmM" />
+        <item index="2" class="java.lang.String" itemvalue="Python.localAgnet (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.tests" />
+        <item index="4" class="java.lang.String" itemvalue="Python.localAgnet" />
       </list>
     </recent_temporary>
   </component>
@@ -945,7 +894,14 @@
       <option name="project" value="LOCAL" />
       <updated>1487383460171</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="uodate nfvo and some html">
+      <created>1487419326235</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1487419326235</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1044,45 +1000,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/orchestrator/templates_examples/vnfd_example.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="5" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/templates_examples/vnffgd_example.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="32" column="37" lean-forward="true" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/systemSettings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="18" lean-forward="false" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/demodeploy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="26" lean-forward="false" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vim/tests.py" />
-    <entry file="file://$PROJECT_DIR$/vim/views.py" />
-    <entry file="file://$PROJECT_DIR$/vim/models.py" />
-    <entry file="file://$PROJECT_DIR$/vim/localAgnet.py" />
-    <entry file="file://$PROJECT_DIR$/vim/apps.py" />
-    <entry file="file://$PROJECT_DIR$/vim/admin.py" />
     <entry file="file://$PROJECT_DIR$/orchestrator/migrations/0007_auto_20170217_0834.py" />
     <entry file="file://$PROJECT_DIR$/orchestrator/migrations/0001_initial.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1116,20 +1038,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="597">
           <caret line="65" column="40" lean-forward="false" selection-start-line="65" selection-start-column="40" selection-end-line="65" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/algorithm_delete.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/algorithm_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1185,20 +1093,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-567">
           <caret line="22" column="6" lean-forward="false" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/NFVIcatalogue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-927">
-          <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/vnfd_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1217,14 +1111,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="77" column="8" lean-forward="false" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/localAgnet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="149" column="34" lean-forward="true" selection-start-line="149" selection-start-column="34" selection-end-line="149" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -1269,14 +1155,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/templates_examples/vnfd_dpi.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/orchestrator/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -1290,16 +1168,8 @@
         <state relative-caret-position="360">
           <caret line="78" column="91" lean-forward="true" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="91" />
           <folding>
-            <element signature="e#162#173#0" expanded="true" />
+            <element signature="e#162#173#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/templates_examples/nsd_dpi_fw.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="15" lean-forward="false" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1308,7 +1178,7 @@
         <state relative-caret-position="420">
           <caret line="63" column="18" lean-forward="false" selection-start-line="63" selection-start-column="18" selection-end-line="63" selection-end-column="18" />
           <folding>
-            <element signature="e#162#173#0" expanded="true" />
+            <element signature="e#162#173#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1361,85 +1231,183 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/vnfd_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/templates_examples/nsd_dpi_fw.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="15" lean-forward="false" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/templates_examples/vnfd_dpi.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="17" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/welcome.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="7" lean-forward="true" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/tests/abc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="67" column="8" lean-forward="false" selection-start-line="67" selection-start-column="8" selection-end-line="67" selection-end-column="8" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#666#672#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#951#957#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#2;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#1216#1222#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#2;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#1489#1495#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#2;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#1776#1782#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#2;n#div#5;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#2043#2049#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#2;n#div#6;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#2330#2336#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#div#7;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#1;n#div#7;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#2556#2562#0#HTML" expanded="true" />
-            <marker date="1487418946579" expanded="false" signature="2433:2445" ph="..." />
-          </folding>
+        <state relative-caret-position="250">
+          <caret line="77" column="66" lean-forward="false" selection-start-line="77" selection-start-column="66" selection-end-line="77" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/tests/abc488.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/vnffg_algorithm_active.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="78" lean-forward="false" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/vnffg_algorithm_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/vnf_algorithm_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="63" lean-forward="false" selection-start-line="9" selection-start-column="63" selection-end-line="9" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ns_algorithm_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="72" lean-forward="false" selection-start-line="11" selection-start-column="72" selection-end-line="11" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/tests/testAlgorithmM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="56" column="8" lean-forward="false" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ns_algorithm_active.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vnf_reuse_random_alg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/vnf_algorithm_active.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nfvOrchestrator/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="105" column="44" lean-forward="false" selection-start-line="105" selection-start-column="44" selection-end-line="105" selection-end-column="44" />
+        <state relative-caret-position="345">
+          <caret line="140" column="52" lean-forward="true" selection-start-line="140" selection-start-column="52" selection-end-line="140" selection-end-column="52" />
           <folding>
             <element signature="e#649#681#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/orchestrator/views.py">
+    <entry file="file://$PROJECT_DIR$/orchestrator/tests/testStr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="521" column="40" lean-forward="false" selection-start-line="521" selection-start-column="40" selection-end-line="521" selection-end-column="40" />
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/localAgnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="65" column="58" lean-forward="false" selection-start-line="65" selection-start-column="58" selection-end-line="65" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/orchestrator/NFVO.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="155" column="29" lean-forward="false" selection-start-line="155" selection-start-column="29" selection-end-line="155" selection-end-column="29" />
+        <state relative-caret-position="185">
+          <caret line="141" column="46" lean-forward="false" selection-start-line="141" selection-start-column="46" selection-end-line="141" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="692" column="42" lean-forward="true" selection-start-line="692" selection-start-column="42" selection-end-line="692" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/orchestrator/NFVIcatalogue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="135" column="54" lean-forward="false" selection-start-line="135" selection-start-column="54" selection-end-line="135" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/orchestrator/AlgorithmManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="195">
+          <caret line="22" column="9" lean-forward="false" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+          <folding>
+            <element signature="e#165#178#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

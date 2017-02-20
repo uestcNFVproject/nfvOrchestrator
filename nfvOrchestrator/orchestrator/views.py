@@ -36,6 +36,11 @@ nfvo = NFVO.init_NFVO(vim=vim, vnfm=vnfm, NSD_manager=NSD_manager,
 NSD_manager.set_vnfd_catalogue(VNFD_manager)
 FG_manager.set_nfvo(nfvo)
 
+
+
+def str_obj(obj):
+ return str('\n'.join(['%s:%s' % item for item in obj.__dict__.items()]))
+
 class TestView(View):
     def post(self, request, *args, **kwargs):
         print('test post ')
@@ -515,60 +520,158 @@ class nsHandlerView(View):
                 return HttpResponse(json.dumps("please use post"), content_type="application/json")
         return HttpResponse(json.dumps("wrong page"), content_type="application/json")
 
-# algorithm
-class algorithmListView(View):
+# ns algorithm
+class nsAlgorithmListView(View):
     def get(self, request, *args, **kwargs):
         global nfvo
-        algorithm_list = nfvo.get_all_alogorithm()
+        algorithm_list = nfvo.get_all_algorithm_for_ns()
         return HttpResponse(json.dumps(algorithm_list), content_type="application/json")
 
 
-class algorithmAddView(TemplateView):
-    template_name = "algorithm_add.html"
+class nsActiveAlgorithm(View):
+    def get(self, request, *args, **kwargs):
+        global nfvo
+        algorithm_list = nfvo.get_active_algorithm_for_ns()
+        return HttpResponse(json.dumps(algorithm_list), content_type="application/json")
 
 
 
-class algorithmDeleteView(TemplateView):
-    template_name = "algorithm_delete.html"
+class activeNsAlgorithm(TemplateView):
+    template_name = "ns_algorithm_active.html"
 
+class addNsAlgorithm(TemplateView):
+    template_name = "ns_algorithm_add.html"
 
-# handle algorithm curd
-class algorithmHandlerView(View):
+class ns_algorithm_handler(View):
     def post(self, request, *args, **kwargs):
         global nfvo
-        if request.path == '/main/algorithm_add/algorithm_handler/':
-            if (request.method == "POST"):
-                algorithm_name = request.POST.get('algorithm_name', None)
-                algorithm_content = request.POST.get('algorithm_content', None)
-                if algorithm_name is None:
-                    return HttpResponse(json.dumps("no algorithm_name"), content_type="application/json")
-                if algorithm_content is None:
-                    return HttpResponse(json.dumps("no algorithm_content"), content_type="application/json")
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+        if (request.method == "POST"):
+            ns_algorithm_name = request.POST.get('algorithm_name', None)
+            ns_algorithm_content = request.POST.get('algorithm_content', None)
+            if ns_algorithm_name is None and ns_algorithm_content is None:
+                return HttpResponse(json.dumps("no ns algorithm_name or ns algorithm_content"), content_type="application/json")
+            if nfvo is None:
+                return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+            if ns_algorithm_content is None:
+                # 激活
                 try:
-                    nfvo.upload_alorithm(algorithm_name,algorithm_content)
+                    res=nfvo.set_active_algorithm_for_ns(ns_algorithm_name)
                 except Exception as e:
                     return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
+                return HttpResponse(json.dumps(str(res)), content_type="application/json")
             else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        if request.path == '/main/algorithm_delete/algorithm_handler/':
-            if (request.method == "POST"):
-                algorithm_name = request.POST.get('algorithm_name', None)
-                if algorithm_name is None:
-                    return HttpResponse(json.dumps("no algorithm_name"), content_type="application/json")
+                try:
+                    res=nfvo.add_algorithm_for_ns(algorithm_name=ns_algorithm_name,algorithm_content=ns_algorithm_content)
+                except Exception as e:
+                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                return HttpResponse(json.dumps(str(res)), content_type="application/json")
+            return HttpResponse(json.dumps("ok"), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps("please use post"), content_type="application/json")
 
-                if nfvo is None:
-                    return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+class vnfAlgorithmListView(View):
+    def get(self, request, *args, **kwargs):
+        global nfvo
+        algorithm_list = nfvo.get_all_algorithm_for_vnf()
+        return HttpResponse(json.dumps(str(algorithm_list)), content_type="application/json")
+
+class vnfActiveAlgorithm(View):
+    def get(self, request, *args, **kwargs):
+        global nfvo
+        algorithm = nfvo.get_active_algorithm_for_vnf()
+        return HttpResponse(json.dumps(str(algorithm)), content_type="application/json")
+
+
+class activeVnfAlgorithm(TemplateView):
+    template_name = "vnf_algorithm_active.html"
+
+class addVnfAlgorithm(TemplateView):
+    template_name = "vnf_algorithm_add.html"
+
+class vnf_algorithm_handler(View):
+    def post(self, request, *args, **kwargs):
+        global nfvo
+        if (request.method == "POST"):
+            vnf_algorithm_name = request.POST.get('algorithm_name', None)
+            vnf_algorithm_content = request.POST.get('algorithm_content', None)
+            if vnf_algorithm_name is None and vnf_algorithm_content is None:
+                return HttpResponse(json.dumps("no vnf algorithm_name or vnf algorithm_content"),
+                                    content_type="application/json")
+            if nfvo is None:
+                return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+            if vnf_algorithm_content is None:
+                # 激活
                 try:
-                    nfvo.delete_alorithm(algorithm_name)
+                    res = nfvo.set_active_algorithm_for_vnf(vnf_algorithm_name)
                 except Exception as e:
                     return HttpResponse(json.dumps(str(e)), content_type="application/json")
-                return HttpResponse(json.dumps("ok"), content_type="application/json")
+                return HttpResponse(json.dumps(str(res)), content_type="application/json")
             else:
-                return HttpResponse(json.dumps("please use post"), content_type="application/json")
-        return HttpResponse(json.dumps("wrong page"), content_type="application/json")
+                try:
+                    print('add vnf alg')
+                    res = nfvo.add_algorithm_for_vnf(algorithm_name=vnf_algorithm_name,
+                                                    algorithm_content=vnf_algorithm_content)
+                except Exception as e:
+                    print(e)
+                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                return HttpResponse(json.dumps(str(res)), content_type="application/json")
+            return HttpResponse(json.dumps("ok"), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps("please use post"), content_type="application/json")
+
+
+
+
+class vnffgAlgorithmListView(View):
+    def get(self, request, *args, **kwargs):
+        global nfvo
+        algorithm_list = nfvo.get_all_algorithm_for_vnffg()
+        return HttpResponse(json.dumps(algorithm_list), content_type="application/json")
+
+
+class vnffgActiveAlgorithm(View):
+    def get(self, request, *args, **kwargs):
+        global nfvo
+        algorithm_list = nfvo.get_active_algorithm_for_vnffg()
+        return HttpResponse(json.dumps(algorithm_list), content_type="application/json")
+
+
+class activeVnffgAlgorithm(TemplateView):
+    template_name = "vnffg_algorithm_active.html"
+
+
+class addVnffgAlgorithm(TemplateView):
+    template_name = "vnffg_algorithm_add.html"
+
+
+class vnffg_algorithm_handler(View):
+    def post(self, request, *args, **kwargs):
+        global nfvo
+        if (request.method == "POST"):
+            vnffg_algorithm_name = request.POST.get('algorithm_name', None)
+            vnffg_algorithm_content = request.POST.get('algorithm_content', None)
+            if vnffg_algorithm_name is None and vnffg_algorithm_content is None:
+                return HttpResponse(json.dumps("no vnffg algorithm_name or vnffg algorithm_content"),
+                                    content_type="application/json")
+            if nfvo is None:
+                return HttpResponse(json.dumps("nfvo not init"), content_type="application/json")
+            if vnffg_algorithm_content is None:
+                # 激活
+                try:
+                    res = nfvo.set_active_algorithm_for_vnffg(vnffg_algorithm_name)
+                except Exception as e:
+                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                return HttpResponse(json.dumps(str(res)), content_type="application/json")
+            else:
+                try:
+                    res = nfvo.add_algorithm_for_vnffg(algorithm_name=vnffg_algorithm_name,
+                                                     algorithm_content=vnffg_algorithm_content)
+                except Exception as e:
+                    return HttpResponse(json.dumps(str(e)), content_type="application/json")
+                return HttpResponse(json.dumps(str(res)), content_type="application/json")
+            return HttpResponse(json.dumps("ok"), content_type="application/json")
+        else:
+            return HttpResponse(json.dumps("please use post"), content_type="application/json")
 
 
 # compute_node
@@ -576,11 +679,21 @@ class computeNodeListView(View):
     def get(self, request, *args, **kwargs):
         global nfvo
         compute_node_list = nfvo.get_all_compute_node()
-        return HttpResponse(json.dumps(compute_node_list), content_type="application/json")
+        res_list=[]
+        for compute_node in compute_node_list:
+            res_list.append(str(compute_node)+''':
+            '''+str_obj(compute_node)+'''
+            ''')
+        return HttpResponse(res_list, content_type="application/json")
 
 # switch_node
 class switchNodeListView(View):
     def get(self, request, *args, **kwargs):
         global nfvo
         switch_node_list = nfvo.get_all_switch_node()
-        return HttpResponse(json.dumps(switch_node_list), content_type="application/json")
+        res_list = []
+        for switch_node in switch_node_list:
+            res_list.append(str(switch_node)+''':
+            '''+str_obj(switch_node)+'''
+            ''')
+        return HttpResponse(res_list, content_type="application/json")

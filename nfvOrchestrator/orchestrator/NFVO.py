@@ -151,21 +151,52 @@ class NFVO:
     def get_sff_name(self,sf_ip):
         return self.FG_manager.get_sff_name(sf_ip)
 
-    # algorithm manager
-    def get_all_alogorithm(self):
-        self.algorith_manager
-        pass
+    # algorithm manager--ns
+    def get_all_algorithm_for_ns(self):
+        return self.algorith_manager.get_all_algorithm_for_ns()
 
-    def upload_alorithm(self,algorithm_name,algorithm_content):
-        pass
+    def get_active_algorithm_for_ns(self):
+        return self.algorith_manager.get_active_algorithm_for_ns()
 
-    def delete_alorithm(self,algorithm_name):
-        pass
+    def set_active_algorithm_for_ns(self, algorithm_name):
+        return self.algorith_manager.set_active_algorithm_for_ns(algorithm_name)
+
+    def add_algorithm_for_ns(self, algorithm_content, algorithm_name):
+        return self.algorith_manager.add_algorithm_for_ns(algorithm_content, algorithm_name)
+
+
+    # algorithm manager--vnffg
+    def get_all_algorithm_for_vnffg(self):
+        return self.algorith_manager.get_all_algorithm_for_vnffg()
+
+    def get_active_algorithm_for_vnffg(self):
+        return self.algorith_manager.get_active_algorithm_for_vnffg()
+
+    def set_active_algorithm_for_vnffg(self, algorithm_name):
+        return self.algorith_manager.set_active_algorithm_for_vnffg(algorithm_name)
+
+    def add_algorithm_for_vnffg(self, algorithm_content, algorithm_name):
+        return self.algorith_manager.add_algorithm_for_vnffg(algorithm_content, algorithm_name)
+
+    # algorithm manager--vnf
+    def get_all_algorithm_for_vnf(self):
+        return self.algorith_manager.get_all_algorithm_for_vnf()
+
+    def get_active_algorithm_for_vnf(self):
+        return self.algorith_manager.get_active_algorithm_for_vnf()
+
+    def set_active_algorithm_for_vnf(self, algorithm_name):
+        return self.algorith_manager.set_active_algorithm_for_vnf(algorithm_name)
+
+    def add_algorithm_for_vnf(self, algorithm_content, algorithm_name):
+        return self.algorith_manager.add_algorithm_for_vnf(algorithm_content, algorithm_name)
 
     # settings
     def register_vim(self, vim):
         self.vim_list.append(vim)
 
+    def get_all_vnfcs(self):
+        return self.get_all_servers()
 
     def get_vim_by_name(self,vim_name):
         for vim in self.vim_list:
