@@ -134,6 +134,7 @@ class Default_vnffg_algorithm:
 
         return solution
 
+
 class AlgorithmManager:
 
     default_ns_algorithm=Default_ns_algorithm

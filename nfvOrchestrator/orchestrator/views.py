@@ -70,7 +70,6 @@ class moniter(View):
     def post(self, request, *args, **kwargs):
         print('moniter post')
         # 处理localAgent上传的信息
-
         json_info=str(request.body, encoding="utf-8")
         dic_info = json.loads(json_info)
         if dic_info != None:
@@ -124,10 +123,52 @@ class moniter(View):
             print('get one node info')
             # 根据nodeName在数据库中查询
             try:
-                p = Node_info.objects.get(NodeName=nodeName)
+                p = Node_info.objects.all().reverse()[0]
+                print(p)
+
+                Time = p.Time
+                RunTime = p.RunTime
+                NodeName = p.NodeName
+                BaseInfo = {'RunTime': RunTime, 'Time': Time, 'NodeName': NodeName}
+
+                Load1 = p.Load1
+                Load5 = p.Load5
+                Load15 = p.Load15
+                LoadInfo = {'Load1': Load1, 'Load5': Load5, 'Load15': Load15}
+
+                TaskInfo = {}
+                Taskstotal = p.Taskstotal
+                TaskRunning = p.TaskRunning
+                TaskSleeping = p.TaskSleeping
+                TaskStopped = p.TaskStopped
+                Taskzombie = p.Taskzombie
+                TaskInfo = {'Taskstotal': Taskstotal, 'TaskRunning': TaskRunning, 'TaskSleeping': TaskSleeping,
+                            'TaskStopped': TaskStopped, 'Taskzombie': Taskzombie}
+
+                Us = p.Us
+                Sy = p.Sy
+                Ni = p.Ni
+                Idle = p.Idle
+                Wa = p.Wa
+                Hi = p.Hi
+                Si = p.Si
+                CpuInfo = {'Us': Us, 'Sy': Sy, 'Ni': Ni, 'Idle': Idle, 'Wa': Wa, 'Hi': Hi, 'Si': Si}
+
+                Memtotal = p.Memtotal
+                Memused = p.Memused
+                Memfree = p.Memfree
+                Membuffer = p.Membuffer
+                MemInfo = {'Memtotal': Memtotal, 'Memused': Memused, 'Memfree': Memfree, 'Membuffer': Membuffer}
+
+                DiskInfo = p.DiskInfo
+                IOinfo = p.IOinfo
+
+                info_dic = {'BaseInfo': BaseInfo, 'LoadInfo': LoadInfo, 'TaskInfo': TaskInfo, 'CpuInfo': CpuInfo,
+                            'MemInfo': MemInfo, 'DiskInfo': DiskInfo, 'IOinfo': IOinfo}
+
             except Node_info.DoesNotExist:
                 return HttpResponse(json.dumps("no info found in db"), content_type="application/json")
-            json_str = json.dumps(p, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+            json_str = json.dumps(info_dic)
             return HttpResponse(json_str, content_type="application/json")
         else:
             # 提取最新信息

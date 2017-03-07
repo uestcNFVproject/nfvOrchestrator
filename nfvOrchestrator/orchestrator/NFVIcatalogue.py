@@ -138,6 +138,8 @@ class NFVI_manager:
         switch.add_upper_level_switch(core_switch,1000)
 
         # 从OpenStack获取计算节点信息，由于nova接口获取信息过少,现在采取人工配置
+
+
         compute_node1=Compute_node('nova', 'node-50', 'active', 'up', 6, 3, 18, '1000', switch)
         self.compute_node_list.append(compute_node1)
 
@@ -191,6 +193,26 @@ class NFVI_manager:
         server.ip_list.append('192.168.111.15')
         server.ip_list.append('192.168.1.204')
         compute_node1.add_server(server)
+
+    def set_nfvo(self,nfvo):
+        self.nfvo=nfvo
+
+    def init_from_os(self):
+        compute_nodes=self.nfvo.get_all_hosts()
+        servers = self.nfvo.get_all_servers()
+        for nova_compute_node in compute_nodes:
+            nfvi_compute_node = Compute_node(nova_compute_node)
+            self.compute_node_list.append(nfvi_compute_node)
+
+        for nova_server in servers:
+            nfvi_server = Server(nova_server)
+            host_name=nfvi_server.host_name
+            for compute_node in  self.compute_node_list:
+                if host_name==compute_node.name:
+                    compute_node.add_server(nfvi_server)
+
+
+
 
     def get_all_compute_node(self):
         return self.compute_node_list

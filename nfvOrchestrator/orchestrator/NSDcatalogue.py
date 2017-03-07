@@ -35,9 +35,8 @@ def set_next_vnffgd_id(next_id):
 # provider nsd management ,including nsd curd
 class NSD_manager:
     def __init__(self):
-        pass
         # 从数据库中读取已有NSD和VNFFGD
-        # 0==》dnsd
+        # 0==》nsd
         # 2==>vnffgd
         max_assigned_id = -1
         nsd_in_db = Descriptor.objects.filter(type=0).values_list('assigned_id', 'yaml_content')

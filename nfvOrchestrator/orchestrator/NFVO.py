@@ -356,7 +356,7 @@ class NFVO:
                     self.vnfm.delete_vnf(vnf)
                 for net in net_solution:
                     self.vim_list[net.vim_zone_number].delete_net(net)
-                return False
+                return  False
 
         # 更新ns_catalogue
         vnf_instance_list=[]
@@ -368,7 +368,7 @@ class NFVO:
             vnf_instance = Vnf_instance( name=vnf_instance_name, vnfm_instance=vnfm_vnf_instance, vnfd=vnfd)
             self.NS_manager.add_vnf_instance(vnf_instance)
             vnf_instance_list.append(vnf_instance)
-        ns_instance=Ns_Instance(name=ns_instance_name,nsd=nsd,vnf_instance_list=vnf_instance_list,fg_sfc_list=sfc_instance_list,net_list=net_instance_list)
+        ns_instance=Ns_Instance(name=ns_instance_name,solution=solution,nsd=nsd,vnf_instance_list=vnf_instance_list,fg_sfc_list=sfc_instance_list,net_list=net_instance_list)
         self.NS_manager.add_ns_instance(ns_instance)
         return ns_instance
 
