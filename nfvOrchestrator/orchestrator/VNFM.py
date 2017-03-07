@@ -17,11 +17,65 @@ from orchestrator import infoObjects
 # provider vnf life cycle management
 # 接受vnf_solution来创建vnf_instance
 # 管理vnf 实体
-class VNFM:
-    vnf_list = []
 
-    def create_vnf(self, vnfd_solution):
+
+class VNFS:
+    pass
+
+
+
+
+class VNFM:
+    vnfi_list=[]
+    vnfc_list = []
+    vnfs_list = []
+    vnfc_vnfs_dic={}
+
+    def get_vnf_instance_list(self):
+        return self.vnfi_list
+
+    def get_vnf_c_list(self):
+        return self.vnfc_list
+
+    def get_vnf_s_list(self):
+        return self.vnfs_list
+
+    def get_vnfc_vnfs_dic(self):
+        return self.vnfc_vnfs_dic
+
+    def create_vnf(self,vnf_solution,vnf_instance_name):
         pass
+
+    def del_vnf(self,vnf_instance_name):
+        pass
+
+
+
+
+    def create_vnf(self,vnf_solution,vnf_instance_name):
+        if vnf_solution.create_vnfc:
+            # 创建新的vm（vnfc）
+            vm_instance =TackerProxy.create_vm(vm_name=vnf_solution.vm_name,vnf_solution=vnf_solution)
+            #  绑定floating ip
+            ip = self.get_new_floating_ip()
+            address = Address(ip)
+            vm_instance.add_floating_ip(address)
+            self.vm_ip_dic[vm_instance] = ip
+            self.vnfc_list.append(vm_instance)
+        else:
+            # 复用vm（vnfc）
+            vm_instance = vnf_solution.vm_instance
+        # 部署功能
+        self.init_function(vm_instance, vnf_solution.vnfd, vnf_instance_name)
+        vnfc=VNFS(vnf_solution.vnfd.type,vm_instance)
+        self.vnfs_list.append()
+        # 更新数据结构
+        vnf_instance = Vnf_instance(name=vnf_instance_name, vm_instance=vm_instance, vnfd=vnf_solution.vnfd,sf=vnfc)
+        if vm_instance not in self.vnfc_vnfs_dic.keys():
+            self.vnfc_vnfs_dic[vm_instance]=[vnfc]
+        else:
+            self.vnfc_vnfs_dic[vm_instance].append(vnfc)
+        return vnf_instance
 
     def delete_vnf(self, vnf_instance):
         pass
@@ -77,15 +131,15 @@ class VNFM_simple(VNFM):
 
     def __init__(self):
         # 获取已有的vm，填充数据结构,这里只能获取server的interface_list
-        # VNFM_simple.vm_list=VIMProxy.VIMProxy.get_all_server()
-        # for vm in VNFM_simple.vm_list:
-        #     interface_list=vm.interface_list()
-        #     for interface in interface_list:
-        #         id =interface.id
-        #         if id in VNFM_simple.interfaceId_ip_dic:
-        #             ip=VNFM_simple.interfaceId_ip_dic[id]
-        #             if ip.startwith("192.168.1."):
-        #                 VNFM_simple.vm_ip_dic[vm]=ip
+        VNFM_simple.vm_list=VIMProxy.VIMProxy.get_all_server()
+        for vm in VNFM_simple.vm_list:
+            interface_list=vm.interface_list()
+            for interface in interface_list:
+                id =interface.id
+                if id in VNFM_simple.interfaceId_ip_dic:
+                    ip=VNFM_simple.interfaceId_ip_dic[id]
+                    if ip.startwith("192.168.1."):
+                        VNFM_simple.vm_ip_dic[vm]=ip
         pass
 
         # self.vnfd=vnfd
@@ -135,7 +189,7 @@ class VNFM_simple(VNFM):
         if count == 0:
             VIMProxy.VIMProxy.delete_vm(vnf_instance.vm)
 
-    # # init with needed software
+    # # init with needed software该功能暂时由FG manager实现
     def init_vnf_function(self, vnf_instance):
         pass
 
@@ -162,6 +216,7 @@ class VNFM_simple(VNFM):
 
 
 class VNFM_tacker(VNFM):
+
     pass
 
     # todo

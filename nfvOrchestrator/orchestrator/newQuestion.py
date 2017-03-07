@@ -9,6 +9,8 @@ import random
 import copy
 import logging
 import queue
+import datetime
+import time
 
 logging.basicConfig(level=logging.INFO,
                     format='[line:%(lineno)d] %(levelname)s %(message)s',
@@ -1044,7 +1046,7 @@ def active_solution(sfc_request, sfi_sets, solution):
 
 
 def ts(sfc_requests, sfc_sets, sfi_sets,BE):
-    time_limit = 20
+    time_limit =100
     tl_length_limit = 3
     K = 1
     better_flag=False
@@ -1842,7 +1844,7 @@ def run_random_demo2():
 
 
 def run_half_random_demo():
-    request_num_list=[90]
+    request_num_list=[110]
     for request in request_num_list:
         run_half_random_demo_with_request_num(request)
 
@@ -1853,7 +1855,7 @@ def run_half_random_demo_with_request_num(request_num):
 
     data_ok=False
     while not data_ok:
-        all_time = 50
+        all_time = 10
         request_count = 0
         my_success_count = 0
         random_success_count = 0
@@ -1874,7 +1876,13 @@ def run_half_random_demo_with_request_num(request_num):
         max_free_load_greedy_min_pi_list = []
         min_load_greedy_min_pi_list = []
         ts_min_pi_list = []
-        for time in range(all_time):
+
+        GBFL_time=0
+        GSL_time=0
+        GLIF_time=0
+        TS_time=0
+
+        for runtime in range(all_time):
             # print(time)
             sfc_sets = creat_sfc_set_half_random()
             sfi_sets_for_random = create_sfi_set_half_radom()
@@ -1900,15 +1908,26 @@ def run_half_random_demo_with_request_num(request_num):
                 # res = []
                 random_sucess = hangder_request_random(sfc_request=reques, sfi_sets=sfi_sets_for_random,
                                                        res=[])
+                Timer_start = time.time()
                 my_sucess = hangder_request(sfc_request=reques, sfc_sets=sfc_sets, sfi_sets=sfi_sets_for_me,
                                             BE=BE_for_me,
                                             res=[])
+                Timer_end = time.time()
+                GLIF_time=GLIF_time+Timer_end-Timer_start
+                # print(GLIF_time)
+                Timer_start=time.time()
                 max_free_load_greedy_sucess = hangder_request_greedy_max_free_load(sfc_request=reques,
                                                                      sfi_sets=sfi_sets_for_max_free_load_greedy,
                                                                      res=[])
+                Timer_end=time.time()
+                GBFL_time=GBFL_time+Timer_end-Timer_start
+
+                Timer_start = time.time()
                 min_load_greedy_sucess = hangder_request_greedy_min_load(sfc_request=reques,
                                                                                    sfi_sets=sfi_sets_for_min_load_greedy,
                                                                                    res=[])
+                Timer_end = time.time()
+                GSL_time = GSL_time+Timer_end - Timer_start
 
                 if reques_index not in my_success_dic_tmp:
                     my_success_dic_tmp[reques_index] = 0
@@ -1944,8 +1963,12 @@ def run_half_random_demo_with_request_num(request_num):
                     min_load_greedy_success_dic_tmp[reques_index] += 1
 
             # run ts
-
+            Timer_start = time.time()
             solutions = ts(sfc_requests=requests_for_ts, sfc_sets=sfc_sets, sfi_sets=sfi_sets_for_ts, BE=BE_for_ts)
+            Timer_end = time.time()
+            TS_time = TS_time+Timer_end - Timer_start
+
+
             random_min_pi = get_min_pi(sfc_sets, sfi_sets_for_random)
             random_min_pi_list.append(random_min_pi)
             my_min_pi = get_min_pi(sfc_sets, sfi_sets_for_me)
@@ -2185,6 +2208,14 @@ def run_half_random_demo_with_request_num(request_num):
 
             print(ts_min_pi_sum / all_time)
             logging.info(ts_min_pi_sum / all_time)
+
+        r_num=request_num*all_time
+        print("time:")
+        print('GBFL_time:'+str(GBFL_time/r_num*1000))
+        print('GSL_time:' + str(GSL_time/r_num*1000))
+        print('GLIF_time:' + str(GLIF_time/r_num*1000))
+        print('TS_time:' + str(TS_time/r_num*1000))
+
 
 
 
