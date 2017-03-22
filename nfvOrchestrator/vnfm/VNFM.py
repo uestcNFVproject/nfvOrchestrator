@@ -64,6 +64,13 @@ class VNFM_simple(VNFM):
     interfaceId_ip_dic['e3be7a34-2c2b-4e4a-9f12-e38148354cd2'] = "192.168.1.210"
     interfaceId_ip_dic['380e1fd6-7697-4c65-82f7-13a5a4badf35'] = "192.168.1.208"
     interfaceId_ip_dic['947c1c2a-aa5c-4e2e-be92-937d534a815f'] = "192.168.1.204"
+
+    # vnf-c和sff的关联关系,应该根据网络链路进行分配,但是目前没有网络拓扑关系,默认都是SFF1
+    vnfc_sff_dic={}
+
+
+
+
     def get_new_floating_ip(self):
         if len(VNFM_simple.floating_ip_free_pool) == 0:
             return None
@@ -97,6 +104,8 @@ class VNFM_simple(VNFM):
     # todo 迁移到vim
     def get_server_ip(self,server):
         return VNFM_simple.vm_ip_dic[server]
+
+
     def create_vnf(self, vnf_solution, vnf_instance_name):
         if vnf_solution.create_server:
             # 创建新的vm，暂时不管flvor，都使用默认的m3g flavor（物理资源紧张）
@@ -122,9 +131,12 @@ class VNFM_simple(VNFM):
     def init_function(self, vm_instance, vnfd, vnf_instance_name):
         vnf_type = vnfd.type
         ip = VNFM_simple.vm_ip_dic[vm_instance]
+        sff_name=VNFM_simple.vnfc_sff_dic[vm_instance];
+        if sff_name is None:
+            sff_name="SFF1";
         vnf = infoObjects.vnfInfo(vm_name=None, vnf_name=vnf_instance_name, ip_mgmt_address=ip,
                                   rest_uri="http://" + ip + ":5000", sf_data_plane_locator_ip=ip, type=vnf_type,
-                                  service_function_forwarder_name="SFF1")
+                                  service_function_forwarder_name=sff_name)
         vnf_list = [vnf]
         OpenDayLightApi.register_vnfs(vnf_list)
 

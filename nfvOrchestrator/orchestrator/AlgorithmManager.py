@@ -12,9 +12,136 @@ import datetime
 from orchestrator.infoObjects import *
 
 class Default_ns_algorithm:
+    rsp_next_id=0
+    rsp_Max_id=10000
     @staticmethod
-    def get_solution_for_ns(nsd, nfvo, ns_name):
-        pass
+    def get_rsp_id_pair():
+        Default_ns_algorithm.rsp_next_id+=1
+        res=[Default_ns_algorithm.rsp_next_id,Default_ns_algorithm.rsp_Max_id-Default_ns_algorithm.res]
+        return res
+
+    @staticmethod
+    def get_solution_for_ns(nsd, nfvo, vnffg_name):
+
+        solution = Solution()
+        # 为每一个sfp构造一个sfc solution
+        vnf_index = 0
+        for sfp in nsd.fp_vnfd_dic:
+            sfp_name = list(sfp.keys())[0]
+            sfp_content = sfp[sfp_name]
+            # 为每一个vnf选择一个server
+            vnfd_list = nsd.fp_vnfd_dic[sfp]
+            vnf_list = []
+
+            for vnfd in vnfd_list:
+                vnf_index += 1
+                vnf_instance_name = vnffg_name + str(vnf_index)
+                server_list = nfvo.get_all_servers()
+                random_server_index = random.randint(0, len(server_list))
+                server = server_list[random_server_index]
+                ip = nfvo.get_server_ip(server)
+                vnf_type = vnfd.type
+                # 寻找与该server连接的SFF，由于目前只有一个SFF用于连接SF，就默认SFF1
+                SFF_NAME = nfvo.get_sff_name(ip)
+                vnf_solution = Vnf_solution(vnfd=vnfd, server_instance=server, create_server=False, compute_node=None)
+                solution.vnf_solution_list.append(vnf_solution)
+                vnf = vnfInfo(vm_name=None, vnf_name=vnf_instance_name, ip_mgmt_address=ip,
+                              rest_uri="http://" + ip + ":5000",
+                              sf_data_plane_locator_ip=ip, type=vnf_type, service_function_forwarder_name=SFF_NAME)
+                vnf_list.append(vnf)
+            # 由solution.vnf_lostion执行
+            solution.sfc_solution.vnf_solution = None
+            in_classifier_ip = '192.168.1.204'
+            in_classifier_sff_name = 'SFF0'
+            in_classifier_name = 'Classifier1'
+            out_classifier_ip = '192.168.1.210'
+            out_classifier_sff_name = 'SFF0'
+            out_classifier_name = 'Classifier2'
+            sff_ip = '192.168.1.208'
+            sff0 = sffInfo(name="SFF0", node_name="node0", ovs_bridge_name="br-sfc", data_plane_locator_name="eth1",
+                           data_plane_locator_ip=in_classifier_ip, vnf_list=None)
+            sff1 = sffInfo(name="SFF1", node_name="node1", ovs_bridge_name="br-sfc", data_plane_locator_name="eth1",
+                           data_plane_locator_ip=sff_ip, vnf_list=vnf_list)
+            sff2 = sffInfo(name="SFF3", node_name="node5", ovs_bridge_name="br-sfc", data_plane_locator_name="eth1",
+                           data_plane_locator_ip=out_classifier_ip, vnf_list=None)
+            sff_list = [sff0, sff1, sff2]
+            solution.sfc_solution.sff_list = sff_list
+
+            sfc_name = vnffg_name + sfp_name + "-chain"
+            sfc_list = [sfcInfo(name=sfc_name, isSymmetric="true", vnf_list=vnf_list)]
+            solution.sfc_solution.sfc_list = sfc_list
+
+            sfp_full_name = vnffg_name + sfp_name + "-path"
+            sfp_list = [sfpInfo(sfp_name=sfp_full_name, sfc_name=sfc_name, classifier_name="Classifier1",
+                                symmetric_classifier_name="Classifier2", is_symmetric="true")]
+            solution.sfc_solution.sfp_list = sfp_list
+            # acl信息从vnfgd中获取
+            '''
+            policy:
+            type: ACL
+            criteria:
+              - network_src_port_id: 640dfd77-c92b-45a3-b8fc-22712de480e1
+              - destination_port_range: 80-1024
+              - ip_proto: 6
+              - ip_dst_prefix: 192.168.1.2/24
+            '''
+            policy_type = sfp_content["properties"]["policy"]["type"]
+            policy_criteria = sfp_content["properties"]["policy"]["criteria"]
+            for item in policy_criteria:
+                if 'source_port_range' in item:
+                    source_port_range = item['source_port_range']
+                    source_port_low = source_port_range.split("-")[0]
+                    source_port_high = source_port_range.split("-")[0]
+                if 'ip_src_prefix' in item:
+                    ip_src_prefix = item['ip_src_prefix']
+                if 'destination_port_range' in item:
+                    destination_port_range = item['destination_port_range']
+                    destination_port_low = destination_port_range.split("-")[0]
+                    destination_port_high = destination_port_range.split("-")[0]
+                if 'ip_proto' in item:
+                    ip_proto = item['ip_proto']
+                if 'ip_dst_prefix' in item:
+                    ip_dst_prefix = item['ip_dst_prefix']
+            ace_name = vnffg_name + sfp_name + "-ace"
+            # 这个值是odl查询的值
+            rsp_id_pair=Default_ns_algorithm.get_rsp_id_pair()
+            rspId=rsp_id_pair[0]
+            rspName = vnffg_name + sfp_name + "-rsp"
+
+            ace = aceInfo(rule_name=ace_name, rsp_name='nonoSchedule_' + rspId + rspName, dst_ip=ip_dst_prefix,
+                          src_ip=ip_src_prefix,
+                          ip_protocol=ip_proto, src_port_lower=source_port_low, src_port_upper=source_port_high,
+                          dst_port_lower=destination_port_low,
+                          dst_port_upper=destination_port_high)
+            acl_name_in = vnffg_name + sfp_name + "-acl"
+            acl = aclInfo(name=acl_name_in, ace_list=[ace])
+
+            rsp_reverse_Id =rsp_id_pair[1]
+            rsp_reverse_Name = vnffg_name + sfp_name + "-rsp"
+            ace_reverse = aceInfo(rule_name=ace_name + "_reverse",
+                                  rsp_name='nonoSchedule_' + rsp_reverse_Id + rsp_reverse_Name, dst_ip=ip_dst_prefix,
+                                  src_ip=ip_src_prefix,
+                                  ip_protocol=ip_proto, src_port_lower=source_port_low, src_port_upper=source_port_high,
+                                  dst_port_lower=destination_port_high,
+                                  dst_port_upper=destination_port_low)
+            acl_name_out = vnffg_name + sfp_name + "-acl"
+            acl_out = aclInfo(name=acl_name_out, ace_list=[ace_reverse])
+
+            solution.sfc_solution.acl_list = [acl, acl_out]
+
+            rsp = rspInfo(name=rspName, sfp=sfp_full_name, isSymmetric="true")
+            rsp_reverse = rspInfo(name=rsp_reverse_Name, sfp=sfp_full_name, isSymmetric="true")
+            solution.sfc_solution.rsp_list = [rsp, rsp_reverse]
+
+            # step9:classifier info
+            classifier0 = classifierInfo(name=in_classifier_name, sff_name=in_classifier_sff_name,
+                                         sff_interface="veth-br", ace_name=acl_name_in)
+            classifier1 = classifierInfo(name=out_classifier_name, sff_name=out_classifier_sff_name,
+                                         sff_interface="veth-br", ace_name=acl_name_out)
+            classifier_list = [classifier0, classifier1]
+            solution.sfc_solution.classifier_list = classifier_list
+
+        return solution
 
 class Default_vnf_algorithm:
     @staticmethod
@@ -28,6 +155,7 @@ class Default_vnf_algorithm:
         return solution
 
 class Default_vnffg_algorithm:
+
     # 现在只考虑只有一条sfp的vnffg
     @staticmethod
     def get_solution_for_vnffg(vnffgd, nfvo, vnffg_name):
@@ -75,9 +203,11 @@ class Default_vnffg_algorithm:
                            data_plane_locator_ip=out_classifier_ip, vnf_list=None)
             sff_list = [sff0, sff1, sff2]
             solution.sfc_solution.sff_list = sff_list
+
             sfc_name = vnffg_name + sfp_name + "-chain"
             sfc_list = [sfcInfo(name=sfc_name, isSymmetric="true", vnf_list=vnf_list)]
             solution.sfc_solution.sfc_list = sfc_list
+
             sfp_full_name = vnffg_name + sfp_name + "-path"
             sfp_list = [sfpInfo(sfp_name=sfp_full_name, sfc_name=sfc_name, classifier_name="Classifier1",
                                 symmetric_classifier_name="Classifier2", is_symmetric="true")]
@@ -111,8 +241,10 @@ class Default_vnffg_algorithm:
                     ip_dst_prefix = item['ip_dst_prefix']
             ace_name = vnffg_name + sfp_name + "-ace"
             # 这个值是odl查询的值
-            rspId = 1
+            rsp_id_pair = Default_ns_algorithm.get_rsp_id_pair()
+            rspId = rsp_id_pair[0]
             rspName = vnffg_name + sfp_name + "-rsp"
+
             ace = aceInfo(rule_name=ace_name, rsp_name='nonoSchedule_' + rspId + rspName, dst_ip=ip_dst_prefix,
                           src_ip=ip_src_prefix,
                           ip_protocol=ip_proto, src_port_lower=source_port_low, src_port_upper=source_port_high,
@@ -120,16 +252,29 @@ class Default_vnffg_algorithm:
                           dst_port_upper=destination_port_high)
             acl_name_in = vnffg_name + sfp_name + "-acl"
             acl = aclInfo(name=acl_name_in, ace_list=[ace])
-            solution.sfc_solution.acl_list = [acl]
 
-            rsp = rspInfo(name=rspName, sfp=sfp_full_name, isSymmetric="false")
-            solution.sfc_solution.rsp = rsp
+            ace_reverse = aceInfo(rule_name=ace_name+"_reverse", rsp_name='nonoSchedule_' + + rspId + rspName+"-Reverse", dst_ip=ip_dst_prefix,
+                          src_ip=ip_src_prefix,
+                          ip_protocol=ip_proto, src_port_lower=source_port_low, src_port_upper=source_port_high,
+                          dst_port_lower=destination_port_high,
+                          dst_port_upper=destination_port_low)
+            acl_name_out = vnffg_name + sfp_name + "-acl"
+            acl_out = aclInfo(name=acl_name_out, ace_list=[ace_reverse])
+
+            solution.sfc_solution.acl_list = [acl,acl_out]
+
+            rsp = rspInfo(name=rspName, sfp=sfp_full_name, isSymmetric="true")
+
+            solution.sfc_solution.rsp_list = [rsp]
+
+
+
 
             # step9:classifier info
             classifier0 = classifierInfo(name=in_classifier_name, sff_name=in_classifier_sff_name,
                                          sff_interface="veth-br", ace_name=acl_name_in)
-            # classifier1 = classifierInfo(name=out_classifier_name, sff_name=out_classifier_sff_name, sff_interface="veth-br", ace_name=acl_name_out)
-            classifier_list = [classifier0]
+            classifier1 = classifierInfo(name=out_classifier_name, sff_name=out_classifier_sff_name, sff_interface="veth-br", ace_name=acl_name_out)
+            classifier_list = [classifier0,classifier1]
             solution.sfc_solution.classifier_list = classifier_list
 
         return solution
